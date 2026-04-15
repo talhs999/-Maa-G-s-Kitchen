@@ -53,8 +53,8 @@ export default function AboutPage() {
             >
               <div className={styles.storyImageReal}>
                 <Image 
-                  src="/images/about/sauce_jars.png" 
-                  alt="Traditional Kitchen" 
+                  src="/images/about/sauce_editorial_main.png" 
+                  alt="Premium Handcrafted Sauces" 
                   fill 
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className={styles.realImg}

@@ -56,7 +56,7 @@
   color: var(--ink-muted);
 }
 
-.inputGroup .input {
+.inputGroup input {
   padding-left: 52px;
   width: 100%;
 }

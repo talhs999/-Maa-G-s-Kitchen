@@ -182,42 +182,77 @@
   .hero {
     display: flex;
     flex-direction: column;
-    min-height: auto;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
   }
-  .heroRight {
-    display: block;
-    width: 100%;
-    min-height: 400px;
-    height: 400px;
-  }
+
   .heroLeft {
-    padding: var(--space-4xl) var(--space-xl);
+    position: relative;
+    z-index: 10;
+    padding: calc(var(--header-height) + 60px) var(--space-xl) 80px;
     width: 100%;
-  }
-  .heroContent {
+    margin: auto 0;
+    text-align: center;
     align-items: center;
+    /* Force text to be white/readable over dark image */
+    color: var(--white);
+  }
+
+  .heroTitle {
+    color: var(--white);
+    font-size: clamp(2.5rem, 8vw, 4rem);
     text-align: center;
   }
-  .heroText { align-items: center; }
-  .heroLabel { justify-content: center; }
-  .heroCtas { justify-content: center; }
+
+  .heroDesc {
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .heroRight {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    display: block;
+  }
+
+  /* Dark overlay for readability */
+  .heroRight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(20, 15, 10, 0.6) 0%,
+      rgba(20, 15, 10, 0.75) 50%,
+      rgba(20, 15, 10, 0.9) 100%
+    );
+    z-index: 1;
+  }
+
+  .heroBadge {
+    bottom: 20px;
+    right: 20px;
+    transform: scale(0.8);
+    z-index: 11;
+  }
+
+  .heroLabel { justify-content: center; color: var(--spice-warm); }
+  .heroCtas { justify-content: center; width: 100%; }
   .timerWrapper { display: flex; justify-content: center; }
 }
 
 @media (max-width: 768px) {
-  .heroLeft {
-    align-items: center;
-    text-align: center;
-    padding: var(--space-3xl) var(--space-md);
-  }
-  .heroRight {
-    min-height: 300px;
-    height: 300px;
-  }
   .heroCtas {
     flex-direction: column;
-    align-items: center;
-    width: 100%;
+    gap: var(--space-md);
   }
-  .heroCtas .btn { width: 100%; justify-content: center; }
+  .heroCtas .btn {
+    width: 100%;
+    max-width: 280px;
+  }
 }
