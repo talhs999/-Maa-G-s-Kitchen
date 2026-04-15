@@ -99,6 +99,16 @@ export default function Header() {
 
       {/* Mobile Menu Overlay */}
       <div className={`${styles.mobileOverlay} ${mobileOpen ? styles.open : ''}`}>
+        <div className={styles.mobileMenuHeader}>
+          <Link href="/" className={styles.logo} onClick={() => setMobileOpen(false)}>
+            <span className={styles.logoMaa}>Maa G&apos;s</span>
+            <span className={styles.logoKitchen}>Kitchen</span>
+          </Link>
+          <button className={styles.iconBtn} onClick={() => setMobileOpen(false)}>
+            <X size={24} />
+          </button>
+        </div>
+
         <nav className={styles.mobileNav}>
           {[...leftLinks, ...rightLinks].map((link, i) => (
             <Link
@@ -106,7 +116,7 @@ export default function Header() {
               href={link.href}
               className={styles.mobileNavLink}
               onClick={() => setMobileOpen(false)}
-              style={{ animationDelay: `${i * 0.06}s` }}
+              style={{ animationDelay: `${i * 0.05}s` }}
             >
               {link.label}
             </Link>

@@ -23,31 +23,28 @@ export default function AuthPage() {
     setError(null);
     setSuccess(null);
 
-    if (isLogin) {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+    try {
+      if (isLogin) {
+        const { data, error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-      if (error) {
-        setError(error.message);
+        if (signInError) throw signInError;
+        router.push('/account');
       } else {
-        router.push('/account'); // Redirect to profile/dashboard
-      }
-    } else {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: name,
+        const { data, error: signUpError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: name,
+            }
           }
-        }
-      });
+        });
 
-      if (error) {
-        setError(error.message);
-      } else {
+        if (signUpError) throw signUpError;
+        
         if (data?.user?.identities?.length === 0) {
           setError('This email is already registered.');
         } else {
@@ -55,8 +52,12 @@ export default function AuthPage() {
           setIsLogin(true);
         }
       }
+    } catch (err) {
+      console.error("Auth error:", err);
+      setError(err.message || "An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
