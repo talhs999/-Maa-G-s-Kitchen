@@ -20,8 +20,14 @@ export default function AuthPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
     setSuccess(null);
+
+    // Safety check if database is not configured
+    if (!supabase) {
+      setError("Database connection is not configured. (SUPABASE_URL/KEY missing)");
+      setLoading(false);
+      return;
+    }
 
     try {
       if (isLogin) {

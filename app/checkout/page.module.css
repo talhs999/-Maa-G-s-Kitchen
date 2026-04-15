@@ -262,6 +262,20 @@
     padding: var(--space-xl);
     border-radius: var(--radius-lg);
   }
+  
+  /* High contrast Place Order button */
+  .submitBtn {
+    background: var(--white) !important;
+    color: var(--black) !important;
+    border: 2px solid var(--black);
+    font-weight: 800;
+    padding: 18px !important;
+    transition: all 0.3s ease;
+  }
+  .submitBtn:hover {
+    background: var(--black) !important;
+    color: var(--white) !important;
+  }
   .orderSummary {
     padding: var(--space-xl);
     border-radius: var(--radius-lg);

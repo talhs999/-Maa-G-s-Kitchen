@@ -191,14 +191,15 @@
 }
 
 .freeShipMsg {
-  background: rgba(212, 168, 83, 0.1);
-  color: var(--spice-warm);
-  padding: 12px;
+  background: rgba(212, 168, 83, 0.08);
+  color: #dfbf8d; /* Lighter gold for readability on black */
+  padding: 14px;
   border-radius: var(--radius-md);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   margin-bottom: var(--space-xl);
   text-align: center;
-  border: 1px solid rgba(212, 168, 83, 0.2);
+  border: 1px solid rgba(212, 168, 83, 0.15);
+  font-weight: 500;
 }
 
 /* Empty State */
@@ -236,12 +237,37 @@
   .itemTotal { grid-column: span 1; text-align: right; font-size: 1.1rem; }
   .removeBtn { grid-column: span 1; justify-content: flex-end; }
   
+  .continueShopping {
+    padding: var(--space-lg);
+    text-align: center;
+  }
+
   .orderSummary {
     padding: var(--space-2xl);
     border-radius: 0; /* Full width edge-to-edge feel on small mobile */
   }
 
+  /* High Contrast Buttons inside dark summary */
+  .orderSummary .btn-primary, .orderSummary .outlineBtn {
+    background: var(--white) !important;
+    color: var(--black) !important;
+    border: none;
+    font-weight: 800;
+  }
+
   .hero {
     padding: var(--space-3xl) 0;
+  }
+
+  .outlineBtn {
+    border: 1px solid var(--cream-border);
+    color: var(--ink);
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
   }
 }
