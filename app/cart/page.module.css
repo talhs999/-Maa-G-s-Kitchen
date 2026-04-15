@@ -247,8 +247,8 @@
     border-radius: 0; /* Full width edge-to-edge feel on small mobile */
   }
 
-  /* High Contrast Buttons inside dark summary */
-  .orderSummary .btn-primary, .orderSummary .outlineBtn {
+  /* High Contrast Checkout Button */
+  .checkoutBtn {
     background: var(--white) !important;
     color: var(--black) !important;
     border: none;

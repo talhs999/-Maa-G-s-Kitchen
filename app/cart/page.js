@@ -134,7 +134,7 @@ export default function CartPage() {
                   <span>Total</span>
                   <span>Rs. {total}</span>
                 </div>
-                <Link href="/checkout" className="btn btn-primary btn-lg" style={{ width: '100%' }}>
+                <Link href="/checkout" className={`btn btn-primary btn-lg ${styles.checkoutBtn}`} style={{ width: '100%' }}>
                   Proceed to Checkout <ArrowRight size={18} />
                 </Link>
               </motion.div>

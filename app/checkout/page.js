@@ -164,7 +164,7 @@ export default function CheckoutPage() {
                   <span>Cash on Delivery — Pay when you receive your order</span>
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }}>
+                <button type="submit" className={`btn btn-primary btn-lg ${styles.submitBtn}`} style={{ width: '100%' }}>
                   Place Order — Rs. {total}
                 </button>
               </div>
