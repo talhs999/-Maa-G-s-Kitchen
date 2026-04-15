@@ -1,142 +1,201 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
+/* ===== PRODUCT GRID ===== */
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+}
 
-  --text-primary: #000;
-  --text-secondary: #666;
+.viewAll {
+  text-align: center;
+  margin-top: var(--space-3xl);
+}
 
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
+/* ===== ABOUT SECTION ===== */
+.aboutSection {
+  background: var(--primary-yellow);
+  color: var(--black);
+  padding: var(--space-4xl) 0;
+}
 
+.aboutSection h2,
+.aboutSection p,
+.aboutSection .section-label {
+  color: var(--black) !important;
+}
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4xl);
+  align-items: center;
+}
+
+.aboutImage {
+  position: relative;
+}
+
+.aboutImageReal {
+  width: 100%;
+  aspect-ratio: 4/5;
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+}
+
+.realImg {
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.aboutBadge {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: var(--black);
+  padding: var(--space-lg) var(--space-xl);
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  border-radius: var(--radius-lg);
+}
+
+.aboutBadgeNum {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary-yellow);
+  line-height: 1;
+}
+
+.aboutBadgeText {
+  font-family: var(--font-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.aboutContent h2 {
+  font-size: 3rem;
+  line-height: 1.1;
+  margin-bottom: var(--space-xl);
+}
+
+.aboutContent p {
+  color: rgba(0, 0, 0, 0.7);
+  margin-bottom: var(--space-lg);
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* ===== TESTIMONIALS ===== */
+.testimonialsSection {
+  background: var(--dark-gray);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.testimonialsSection .section-label {
+  color: var(--primary-yellow);
+}
+
+.testimonialsSection h2,
+.testimonialsSection p {
+  color: var(--white) !important;
+}
+
+/* ===== WHY CHOOSE US ===== */
+.whyGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+}
+
+.whyCard {
+  background: var(--dark-gray);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all var(--transition-base);
+}
+
+.whyCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+.whyIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 193, 7, 0.1);
+  color: var(--primary-yellow);
   display: flex;
-  flex: 1;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+  margin: 0 auto var(--space-md);
+  box-shadow: 0 0 20px rgba(255, 193, 7, 0.1);
 }
 
-.main {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
-}
-
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
-}
-
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
+.whyCard h3 {
+  font-family: var(--font-accent);
+  font-size: 1.05rem;
   font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+  color: var(--white);
 }
 
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
+.whyCard p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #A0A0A0;
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
-}
-
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
-}
-
-a.secondary {
-  border-color: var(--button-secondary-border);
-}
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .productGrid {
+    grid-template-columns: repeat(3, 1fr);
   }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
+  .whyGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
+@media (max-width: 768px) {
+  .productGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
   }
 
-  .intro {
-    gap: 16px;
+  .aboutGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
   }
 
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
+  .aboutBadge {
+    right: 20px;
+  }
+
+  .reviewsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .whyGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+@media (max-width: 480px) {
+  .productGrid {
+    grid-template-columns: 1fr;
   }
 
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
+  .whyGrid {
+    grid-template-columns: 1fr;
   }
 }

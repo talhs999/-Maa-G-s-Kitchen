@@ -1,0 +1,134 @@
+.accountPage {
+  min-height: 100vh;
+  padding: calc(var(--header-height) + var(--space-4xl)) 0 var(--space-4xl);
+  background: var(--black);
+}
+
+.accountHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-3xl);
+  padding-bottom: var(--space-xl);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: var(--space-2xl);
+}
+
+.card {
+  background: var(--dark-gray);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cardBody p {
+  margin-bottom: var(--space-sm);
+  font-size: 0.95rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: var(--space-3xl) 0;
+}
+
+.emptyIcon {
+  color: var(--medium-gray);
+  margin-bottom: var(--space-md);
+}
+
+.emptyState p {
+  margin-bottom: var(--space-xl);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.ordersTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ordersTable th,
+.ordersTable td {
+  padding: var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ordersTable th {
+  font-family: var(--font-accent);
+  font-weight: 600;
+  color: var(--white);
+  font-size: 0.9rem;
+}
+
+.ordersTable td {
+  color: #A0A0A0;
+  font-size: 0.95rem;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+
+.statusPending {
+  background: rgba(255, 193, 7, 0.15);
+  color: var(--primary-yellow);
+}
+
+.statusShipped {
+  background: rgba(33, 150, 243, 0.15);
+  color: #64B5F6;
+}
+
+.statusDelivered {
+  background: rgba(76, 175, 80, 0.15);
+  color: #81C784;
+}
+
+.statusCancelled {
+  background: rgba(244, 67, 54, 0.15);
+  color: #E57373;
+}
+
+.loadingContainer {
+  padding: calc(var(--header-height) + var(--space-4xl)) var(--space-lg);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .accountHeader {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+}

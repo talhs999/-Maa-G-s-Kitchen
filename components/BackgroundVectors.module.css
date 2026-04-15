@@ -1,0 +1,39 @@
+.vectorLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.splash1 {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 600px;
+  height: 600px;
+  filter: blur(80px);
+}
+
+.splash2 {
+  position: absolute;
+  bottom: 20%;
+  left: -200px;
+  width: 800px;
+  height: 800px;
+  filter: blur(100px);
+}
+
+.crossPattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 2px 2px, rgba(255, 193, 7, 0.03) 1px, transparent 0);
+  background-size: 60px 60px;
+}

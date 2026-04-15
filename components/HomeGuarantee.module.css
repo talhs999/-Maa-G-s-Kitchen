@@ -1,0 +1,54 @@
+.guaranteeSection {
+  background: var(--primary-yellow);
+  padding: var(--space-2xl) 0;
+  position: relative;
+  z-index: 10;
+}
+
+.guaranteeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+}
+
+.guaranteeCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.icon {
+  color: var(--black);
+  flex-shrink: 0;
+}
+
+.text h4 {
+  font-family: var(--font-accent);
+  color: var(--black);
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.text p {
+  color: rgba(5, 5, 5, 0.7);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 1024px) {
+  .guaranteeGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+}
+
+@media (max-width: 600px) {
+  .guaranteeGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+}

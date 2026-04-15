@@ -1,0 +1,24 @@
+.sliderContainer {
+  background-color: var(--primary-yellow);
+  color: var(--black);
+  text-align: center;
+  padding: 8px 16px;
+  font-family: var(--font-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 1100;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+}

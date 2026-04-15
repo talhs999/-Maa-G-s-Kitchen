@@ -1,0 +1,216 @@
+.card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--dark-gray);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+.cardLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Image */
+.imageWrapper {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #000;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  transition: transform var(--transition-slow);
+}
+
+.imageContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform var(--transition-slow);
+}
+
+.productImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.card:hover .imagePlaceholder,
+.card:hover .imageContainer {
+  transform: scale(1.05);
+}
+
+.placeholderEmoji {
+  font-size: 5rem;
+  filter: grayscale(0.2);
+  transition: all var(--transition-slow);
+}
+
+.card:hover .placeholderEmoji {
+  transform: scale(1.1) rotate(5deg);
+  filter: grayscale(0);
+}
+
+/* Badges */
+.badgeBestseller {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--black);
+  color: var(--primary-yellow);
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  z-index: 2;
+}
+
+.badgeSale {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--accent-red);
+  color: var(--white);
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  z-index: 2;
+}
+
+/* Quick Add Button */
+.quickAdd {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 12px 24px;
+  background: var(--primary-yellow);
+  color: var(--black);
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: var(--radius-full);
+  opacity: 0;
+  transition: all var(--transition-base);
+  z-index: 3;
+  white-space: nowrap;
+  box-shadow: var(--shadow-md);
+}
+
+.card:hover .quickAdd {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.quickAdd:hover {
+  background: var(--dark-yellow);
+  box-shadow: var(--shadow-yellow);
+}
+
+/* Info */
+.info {
+  padding: var(--space-lg);
+}
+
+.category {
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: var(--primary-yellow);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  margin: 6px 0;
+  line-height: 1.3;
+}
+
+.desc {
+  font-size: 0.85rem;
+  color: #D1D1D1;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: var(--space-md);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-sm);
+}
+
+/* Spice Dots */
+.spiceDots {
+  display: flex;
+  gap: 3px;
+}
+
+.spiceDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--light-gray);
+}
+
+.spiceDot.active {
+  background: var(--accent-red);
+}
+
+/* Price */
+.price {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.currentPrice {
+  font-family: var(--font-accent);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--white);
+}
+
+.comparePrice {
+  font-size: 0.85rem;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.weight {
+  font-size: 0.85rem;
+  color: #AAA;
+  margin-top: var(--space-xs);
+  font-weight: 500;
+}
