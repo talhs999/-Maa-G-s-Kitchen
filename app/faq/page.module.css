@@ -1,60 +1,73 @@
+/* ==================================
+   FAQ PAGE — Clean Minimalist
+   ================================== */
+
 .faqPage {
   padding-top: var(--header-height);
+  background: var(--cream);
+  min-height: 100vh;
 }
 
 /* Hero */
 .hero {
-  background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
+  background: var(--white);
+  border-bottom: 1px solid var(--cream-border);
   padding: var(--space-4xl) 0;
   text-align: center;
-  color: var(--white);
 }
 
 .hero h1 {
-  color: var(--white);
+  font-family: var(--font-heading);
+  color: var(--ink);
   margin-bottom: var(--space-sm);
 }
 
 .hero p {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--ink-muted);
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
 }
 
 /* FAQ Content */
+.faqContent {
+  padding: var(--space-4xl) 0;
+}
+
 .faqGrid {
   display: grid;
   grid-template-columns: 1fr 320px;
-  gap: var(--space-3xl);
+  gap: var(--space-4xl);
   align-items: start;
 }
 
 /* FAQ Main */
 .faqCategory {
-  margin-bottom: var(--space-3xl);
+  margin-bottom: var(--space-4xl);
 }
 
 .categoryTitle {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
-  margin-bottom: var(--space-lg);
+  font-size: 1.8rem;
+  margin-bottom: var(--space-xl);
   padding-bottom: var(--space-sm);
-  border-bottom: 2px solid var(--primary-yellow);
+  border-bottom: 2px solid var(--spice-warm);
   display: inline-block;
+  color: var(--ink);
 }
 
 /* FAQ Item */
 .faqItem {
-  border: 1px solid var(--light-gray);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-sm);
+  border: 1px solid var(--cream-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-md);
   overflow: hidden;
+  background: var(--white);
   transition: all var(--transition-base);
 }
 
 .faqItem.open {
-  border-color: rgba(255, 193, 7, 0.3);
+  border-color: var(--spice-warm);
   box-shadow: var(--shadow-sm);
 }
 
@@ -63,30 +76,30 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-lg) var(--space-xl);
+  padding: var(--space-xl);
   font-family: var(--font-accent);
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: var(--black);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--ink);
   text-align: left;
+  background: transparent;
   transition: all var(--transition-base);
   gap: var(--space-md);
 }
 
 .faqItem.open .faqQuestion {
-  background: var(--pale-yellow);
-  font-weight: 600;
+  background: rgba(212, 168, 83, 0.05);
 }
 
 .chevron {
   flex-shrink: 0;
   transition: transform var(--transition-base);
-  color: var(--medium-gray);
+  color: var(--ink-muted);
 }
 
 .faqItem.open .chevron {
   transform: rotate(180deg);
-  color: var(--primary-yellow);
+  color: var(--spice-warm);
 }
 
 .faqAnswer {
@@ -94,49 +107,65 @@
 }
 
 .faqAnswer p {
-  padding: 0 var(--space-xl) var(--space-lg);
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: var(--medium-gray);
+  padding: 0 var(--space-xl) var(--space-xl);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--ink); /* Fixed: Ensuring high visibility */
+  opacity: 0.9;
 }
 
 /* Sidebar */
 .faqSidebar {
   position: sticky;
-  top: calc(var(--header-height) + var(--space-lg));
+  top: calc(var(--header-height) + var(--space-xl));
 }
 
 .sidebarCard {
-  background: var(--light-gray);
-  border-radius: var(--radius-lg);
-  padding: var(--space-2xl);
+  background: var(--ink);
+  color: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3xl);
   text-align: center;
+  box-shadow: var(--shadow-md);
 }
 
 .sidebarCard svg {
-  color: var(--primary-yellow);
-  margin-bottom: var(--space-md);
+  color: var(--spice-warm);
+  margin-bottom: var(--space-xl);
 }
 
 .sidebarCard h3 {
-  font-family: var(--font-accent);
-  font-size: 1.1rem;
-  margin-bottom: var(--space-sm);
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  margin-bottom: var(--space-md);
+  color: var(--white);
 }
 
 .sidebarCard p {
-  font-size: 0.85rem;
-  margin-bottom: var(--space-lg);
+  font-size: 0.95rem;
+  margin-bottom: var(--space-xl);
+  opacity: 0.8;
+  line-height: 1.6;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .faqGrid {
     grid-template-columns: 1fr;
+    gap: var(--space-3xl);
   }
 
   .faqSidebar {
     position: relative;
     top: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .faqQuestion {
+    padding: var(--space-lg);
+  }
+  .categoryTitle {
+    font-size: 1.5rem;
   }
 }

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Heart, Utensils, Award, Users } from 'lucide-react';
+import { Heart, Utensils, Award, Users, Star, Camera } from 'lucide-react';
 import Newsletter from '@/components/Newsletter';
 import styles from './page.module.css';
 
@@ -14,11 +14,12 @@ export default function AboutPage() {
     { icon: <Users size={28} />, title: 'Community First', desc: 'Building a community of food lovers who appreciate real, homemade flavors.' },
   ];
 
-  const timeline = [
-    { year: '2001', title: 'The Beginning', desc: 'Maa G starts making sauces and chutneys for family gatherings, amazhing everyone with her flavors.' },
-    { year: '2010', title: 'Word Spreads', desc: 'Friends and neighbors start requesting Maa G\'s recipes. Small batches are prepared on demand.' },
-    { year: '2020', title: 'Going Online', desc: 'The family decides to share Maa G\'s flavors with all of Pakistan through an online store.' },
-    { year: '2026', title: 'Growing Strong', desc: 'Now serving thousands of happy customers across Pakistan with our range of homemade products.' },
+  const galleryImages = [
+    { src: 'https://images.unsplash.com/photo-1596450514735-244a2df3f33e?q=80&w=1200&auto=format&fit=crop', class: styles.galleryLarge }, // Peppers
+    { src: 'https://images.unsplash.com/photo-1588123190131-1c3fac394f4b?q=80&w=800&auto=format&fit=crop', class: '' }, // Sauce pouring
+    { src: 'https://images.unsplash.com/photo-1506368249639-73a05d6f6488?q=80&w=800&auto=format&fit=crop', class: styles.galleryTall }, // Spices
+    { src: 'https://images.unsplash.com/photo-1596649282321-dfa56b6942da?q=80&w=800&auto=format&fit=crop', class: '' }, // Chilli
+    { src: 'https://images.unsplash.com/photo-1596484552834-6ca035db2038?q=80&w=800&auto=format&fit=crop', class: '' }, // Kitchen
   ];
 
   return (
@@ -27,19 +28,19 @@ export default function AboutPage() {
       <section className={styles.hero}>
         <div className="container">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
             className={styles.heroContent}
           >
-            <span className="section-label">Our Story</span>
-            <h1>About Maa G&apos;s Kitchen</h1>
-            <p>From a humble kitchen to your dining table — a story of love, tradition, and unforgettable flavors.</p>
+            <span className="section-label" style={{ color: 'var(--spice-warm)' }}>Our Heritage</span>
+            <h1>A Legacy of Flavor</h1>
+            <p>We are a family-run artisanal kitchen from Lahore, dedicated to bringing the soul of homemade Pakistani cuisine to your table.</p>
           </motion.div>
         </div>
       </section>
 
-      {/* Story */}
+      {/* Story (Editorial Layout) */}
       <section className={`section ${styles.storySection}`}>
         <div className="container">
           <div className={styles.storyGrid}>
@@ -48,12 +49,12 @@ export default function AboutPage() {
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.8 }}
             >
               <div className={styles.storyImageReal}>
                 <Image 
                   src="https://images.unsplash.com/photo-1556910103-1c02745a8728?q=80&w=800&auto=format&fit=crop" 
-                  alt="Maa G in the kitchen" 
+                  alt="Traditional Kitchen" 
                   fill 
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className={styles.realImg}
@@ -66,37 +67,68 @@ export default function AboutPage() {
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.8 }}
             >
-              <h2>Meet Maa G</h2>
+              <span className="section-label" style={{ color: 'var(--spice-warm)' }}>Meet Maa G</span>
+              <h2>Authentic. Small-Batch. Loved.</h2>
               <p>
-                Behind every jar of sauce, every packet of masala, and every bottle of chutney is
-                a woman who has spent over 25 years perfecting the art of homemade flavors. Known
-                lovingly as &quot;Maa G&quot; by everyone in the family and the community, she
-                believes that the secret ingredient in every great dish is love.
+                The story of Maa G&apos;s Kitchen is a story of 25 years of devotion. 
+                What started as a labor of love for her children in a small Lahore kitchen 
+                has now become a celebration of traditional Pakistani condiments for the whole country.
               </p>
               <p>
-                Growing up in a household where food was the center of every celebration,
-                Maa G learned the art of cooking from her own mother and grandmother. Each recipe
-                carries within it memories of laughter-filled kitchens, festive gatherings, and
-                the warmth of home.
+                Every bottle we produce is a promise. A promise of zero preservatives, 
+                zero artificial thickeners, and 100% authentic flavor. We don&apos;t just make sauces; 
+                we preserve the memories of home-cooked meals.
               </p>
-              <p>
-                Today, Maa G&apos;s Kitchen brings those same cherished flavors to your doorstep.
-                We never use artificial preservatives or shortcuts — because Maa G wouldn&apos;t
-                have it any other way.
-              </p>
+              <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                 <div style={{ padding: '1rem', background: 'rgba(212,168,83,0.1)', borderRadius: '12px', border: '1px solid var(--spice-warm)' }}>
+                    <Star color="var(--spice-warm)" fill="var(--spice-warm)" size={20} />
+                 </div>
+                 <div>
+                    <h4 style={{ margin: 0, color: 'var(--white)' }}>25+ Years of Tradition</h4>
+                    <p style={{ margin: 0, fontSize: '0.9rem', opacity: 0.7 }}>Passing down the secret blend of spices.</p>
+                 </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Values */}
+      {/* Gallery Section */}
+      <section className={styles.gallerySection}>
+        <div className="container">
+          <div className="section-header" style={{ marginBottom: '3rem' }}>
+            <span className="section-label" style={{ color: 'var(--spice-warm)' }}>Our World</span>
+            <h2>Moments from the Kitchen</h2>
+          </div>
+
+          <div className={styles.galleryGrid}>
+            {galleryImages.map((img, i) => (
+              <motion.div
+                key={i}
+                className={`${styles.galleryItem} ${img.class}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Image src={img.src} alt="Kitchen gallery" fill sizes="50vw" />
+                <div className={styles.galleryOverlay}>
+                   <Camera size={24} color="var(--white)" style={{ position: 'absolute', bottom: '20px', right: '20px', opacity: 0.6 }} />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Values (White cards on dark) */}
       <section className={`section ${styles.valuesSection}`}>
         <div className="container">
           <div className="section-header">
-            <span className="section-label">Our Values</span>
-            <h2>What We Stand For</h2>
+            <span className="section-label" style={{ color: 'var(--spice-warm)' }}>Our Values</span>
+            <h2 style={{ color: 'var(--white)' }}>What We Stand For</h2>
           </div>
 
           <div className={styles.valuesGrid}>
@@ -112,36 +144,6 @@ export default function AboutPage() {
                 <div className={styles.valueIcon}>{val.icon}</div>
                 <h3>{val.title}</h3>
                 <p>{val.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline */}
-      <section className={`section ${styles.timelineSection}`}>
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Our Journey</span>
-            <h2>How It All Started</h2>
-          </div>
-
-          <div className={styles.timeline}>
-            {timeline.map((item, i) => (
-              <motion.div
-                key={i}
-                className={styles.timelineItem}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15, duration: 0.5 }}
-              >
-                <div className={styles.timelineYear}>{item.year}</div>
-                <div className={styles.timelineDot} />
-                <div className={styles.timelineContent}>
-                  <h3>{item.title}</h3>
-                  <p>{item.desc}</p>
-                </div>
               </motion.div>
             ))}
           </div>
