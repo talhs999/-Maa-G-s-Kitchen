@@ -6,6 +6,7 @@
   padding-top: var(--header-height);
   background: var(--cream);
   min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* Hero */
@@ -29,7 +30,8 @@
 
 /* Content */
 .shopContent {
-  padding: var(--space-3xl) var(--space-lg);
+  padding: var(--space-3xl) var(--space-md);
+  max-width: 100%;
 }
 
 /* Toolbar */
@@ -239,19 +241,19 @@
   .sidebar {
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
+    left: -100%; /* Ensure it is fully off-screen */
+    width: 280px; /* Fixed width for the sliding panel */
     bottom: 0;
     background: var(--cream);
     z-index: 1500;
     padding: var(--space-xl);
     overflow-y: auto;
-    transform: translateX(-100%);
     transition: transform var(--transition-slow);
+    box-shadow: var(--shadow-xl);
   }
 
   .sidebar.open {
-    transform: translateX(0);
+    transform: translateX(100%); /* Slide it in */
   }
 
   .closeFilter {

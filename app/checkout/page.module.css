@@ -251,11 +251,22 @@
 }
 
 @media (max-width: 768px) {
+  .checkoutContent {
+    padding: var(--space-xl) 0;
+  }
   .formRow {
     flex-direction: column;
     gap: var(--space-md);
   }
   .formSection {
     padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+  }
+  .orderSummary {
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+  }
+  .hero {
+    padding: var(--space-2xl) 0;
   }
 }

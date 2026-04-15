@@ -225,12 +225,23 @@
 
 @media (max-width: 768px) {
   .tableHeader { display: none; }
+  .cartGrid { padding: var(--space-xl) 0; gap: var(--space-2xl); }
   .cartItem {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
-    padding: var(--space-xl);
+    grid-template-columns: 1fr 120px;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
   }
   .itemProduct { grid-column: span 2; }
-  .itemTotal { grid-column: span 1; text-align: right; }
+  .qtyControl { transform: scale(0.9); transform-origin: left; }
+  .itemTotal { grid-column: span 1; text-align: right; font-size: 1.1rem; }
   .removeBtn { grid-column: span 1; justify-content: flex-end; }
+  
+  .orderSummary {
+    padding: var(--space-2xl);
+    border-radius: 0; /* Full width edge-to-edge feel on small mobile */
+  }
+
+  .hero {
+    padding: var(--space-3xl) 0;
+  }
 }
