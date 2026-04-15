@@ -15,11 +15,11 @@ export default function AboutPage() {
   ];
 
   const galleryImages = [
-    { src: 'https://images.unsplash.com/photo-1596450514735-244a2df3f33e?q=80&w=1200&auto=format&fit=crop', class: styles.galleryLarge }, // Peppers
-    { src: 'https://images.unsplash.com/photo-1588123190131-1c3fac394f4b?q=80&w=800&auto=format&fit=crop', class: '' }, // Sauce pouring
-    { src: 'https://images.unsplash.com/photo-1506368249639-73a05d6f6488?q=80&w=800&auto=format&fit=crop', class: styles.galleryTall }, // Spices
-    { src: 'https://images.unsplash.com/photo-1596649282321-dfa56b6942da?q=80&w=800&auto=format&fit=crop', class: '' }, // Chilli
-    { src: 'https://images.unsplash.com/photo-1596484552834-6ca035db2038?q=80&w=800&auto=format&fit=crop', class: '' }, // Kitchen
+    { src: '/images/about/traditional_kitchen.png', class: styles.galleryLarge },
+    { src: '/images/about/sauce_jars.png', class: '' },
+    { src: '/images/about/spices_closeup.png', class: styles.galleryTall },
+    { src: '/images/about/fresh_ingredients.png', class: '' },
+    { src: '/images/products/imli-aloo-bahara.png', class: '' },
   ];
 
   return (
@@ -53,7 +53,7 @@ export default function AboutPage() {
             >
               <div className={styles.storyImageReal}>
                 <Image 
-                  src="https://images.unsplash.com/photo-1556910103-1c02745a8728?q=80&w=800&auto=format&fit=crop" 
+                  src="/images/about/sauce_jars.png" 
                   alt="Traditional Kitchen" 
                   fill 
                   sizes="(max-width: 768px) 100vw, 50vw"
