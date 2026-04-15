@@ -180,14 +180,19 @@
 /* ---- Responsive ---- */
 @media (max-width: 1024px) {
   .hero {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     min-height: auto;
   }
   .heroRight {
-    display: none;
+    display: block;
+    width: 100%;
+    min-height: 400px;
+    height: 400px;
   }
   .heroLeft {
-    padding: calc(var(--header-height) + 60px) 0 80px;
+    padding: var(--space-4xl) var(--space-xl);
+    width: 100%;
   }
   .heroContent {
     align-items: center;
@@ -203,7 +208,11 @@
   .heroLeft {
     align-items: center;
     text-align: center;
-    padding: calc(var(--header-height) + 40px) 0 60px;
+    padding: var(--space-3xl) var(--space-md);
+  }
+  .heroRight {
+    min-height: 300px;
+    height: 300px;
   }
   .heroCtas {
     flex-direction: column;

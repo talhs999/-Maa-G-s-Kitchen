@@ -110,7 +110,7 @@ export default function ShopPage() {
               >
                 All Products
               </button>
-              {Array.from(new Set(sampleProducts.map(p => p.category))).map((catName) => (
+              {Array.from(new Set((sampleProducts || []).map(p => p?.category || 'Uncategorized'))).filter(Boolean).map((catName) => (
                 <button
                   key={catName}
                   className={`${styles.catBtn} ${selectedCategory === catName ? styles.active : ''}`}

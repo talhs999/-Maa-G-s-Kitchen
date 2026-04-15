@@ -8,9 +8,9 @@ import CountdownTimer from './CountdownTimer';
 import styles from './Hero.module.css';
 
 const heroImages = [
-  '/images/hero-banner.png',
-  'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1506368249639-73a05d6f6488?q=80&w=1200&auto=format&fit=crop',
+  '/images/about/sauce_jars.png',
+  '/images/products/imli-aloo-bahara.png',
+  '/images/about/spices_closeup.png',
 ];
 
 export default function Hero() {

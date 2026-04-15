@@ -14,34 +14,44 @@ export default function AccountPage() {
 
   useEffect(() => {
     const fetchUserAndOrders = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
+      try {
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        
+        if (sessionError || !session) {
+          router.push('/auth');
+          return;
+        }
+
+        setUser(session.user);
+
+        // Fetch user's orders based on email
+        const { data: ordersData, error } = await supabase
+          .from('orders')
+          .select('*')
+          .eq('customer_email', session.user.email)
+          .order('created_at', { ascending: false });
+
+        if (!error && ordersData) {
+          setOrders(ordersData);
+        }
+      } catch (err) {
+        console.error("Supabase failed:", err);
+        // Do not crash the app, safely fallback to auth
         router.push('/auth');
-        return;
+      } finally {
+        setLoading(false);
       }
-
-      setUser(session.user);
-
-      // Fetch user's orders based on email
-      const { data: ordersData, error } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('customer_email', session.user.email)
-        .order('created_at', { ascending: false });
-
-      if (!error && ordersData) {
-        setOrders(ordersData);
-      }
-      
-      setLoading(false);
     };
 
     fetchUserAndOrders();
   }, [router]);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+    } catch(err) {
+      console.log(err);
+    }
     router.push('/auth');
   };
 
