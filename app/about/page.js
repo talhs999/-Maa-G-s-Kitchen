@@ -55,6 +55,7 @@ export default function AboutPage() {
                   src="https://images.unsplash.com/photo-1556910103-1c02745a8728?q=80&w=800&auto=format&fit=crop" 
                   alt="Maa G in the kitchen" 
                   fill 
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className={styles.realImg}
                 />
               </div>

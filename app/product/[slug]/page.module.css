@@ -1,5 +1,11 @@
+/* ==================================
+   PRODUCT DETAIL PAGE — Minimalist
+   ================================== */
+
 .productPage {
   padding-top: var(--header-height);
+  background: var(--white);
+  min-height: 100vh;
 }
 
 .notFound {
@@ -7,30 +13,38 @@
   text-align: center;
   min-height: 60vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.notFound h1 { margin-bottom: var(--space-md); }
-.notFound p { margin-bottom: var(--space-xl); }
+.notFound h1 { margin-bottom: var(--space-md); color: var(--ink); }
+.notFound p { margin-bottom: var(--space-xl); color: var(--ink-muted); }
 
 /* Breadcrumb */
 .breadcrumb {
-  padding: var(--space-lg) var(--space-lg);
+  padding: var(--space-xl) var(--space-lg) var(--space-md);
   display: flex;
   align-items: center;
   gap: var(--space-sm);
   font-size: 0.85rem;
-  color: var(--medium-gray);
+  color: var(--ink-muted);
+  font-family: var(--font-accent);
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: var(--ink-muted);
+  transition: color var(--transition-base);
 }
 
 .breadcrumb a:hover {
-  color: var(--primary-yellow);
+  color: var(--spice-warm);
 }
 
 .breadcrumbCurrent {
-  color: var(--black);
-  font-weight: 500;
+  color: var(--ink);
+  font-weight: 600;
 }
 
 /* Product Detail */
@@ -38,7 +52,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-4xl);
-  padding: var(--space-xl) var(--space-lg) var(--space-4xl);
+  padding: var(--space-md) var(--space-lg) var(--space-4xl);
   align-items: start;
 }
 
@@ -59,16 +73,16 @@
 
 .mainImage {
   width: 100%;
-  aspect-ratio: 1;
-  background: #000;
+  aspect-ratio: 4/5;
+  background: var(--cream);
   border-radius: var(--radius-xl);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--cream-border);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  box-shadow: var(--shadow-sm);
 }
 
 .galleryArrow {
@@ -78,40 +92,48 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(5, 5, 5, 0.4);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--white);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--cream-border);
+  color: var(--ink);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
   z-index: 10;
+  box-shadow: var(--shadow-md);
 }
 
 .galleryArrow:hover {
-  background: var(--primary-yellow);
-  color: var(--black);
-  border-color: var(--primary-yellow);
-  box-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
+  background: var(--white);
+  color: var(--spice-warm);
+  transform: translateY(-50%) scale(1.05);
 }
 
 .realImg {
   object-fit: cover;
 }
 
+/* Specific fix: If the image name includes 'png' (like bottles), it's best to contain them rather than cover which clips the bottle */
+.mainImage .realImg[src*=".png"] {
+  object-fit: contain;
+  padding: 10%;
+}
+
 .thumbnailList {
   display: flex;
   gap: var(--space-md);
+  overflow-x: auto;
+  padding-bottom: 8px; /* For scrollbar */
 }
 
 .thumbnail {
-  width: 80px;
+  min-width: 80px;
   height: 80px;
   border-radius: var(--radius-md);
-  background: var(--dark-gray);
+  background: var(--cream);
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -120,30 +142,35 @@
 }
 
 .thumbnail.activeThumb {
-  border-color: var(--primary-yellow);
+  border-color: var(--spice-warm);
 }
 
 .thumbnail:hover {
-  border-color: rgba(255, 193, 7, 0.5);
+  border-color: rgba(212, 168, 83, 0.5);
 }
 
 .bestseller {
   position: absolute;
   top: 16px;
   left: 16px;
-  background: var(--black);
-  color: var(--primary-yellow);
+  background: var(--ink);
+  color: var(--white);
   font-family: var(--font-accent);
   font-weight: 600;
-  font-size: 0.85rem;
-  padding: 8px 20px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 14px;
   border-radius: var(--radius-full);
 }
 
 /* Product Info */
 .productName {
-  font-size: clamp(1.5rem, 4vw, 2.2rem);
-  margin: var(--space-sm) 0;
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--ink);
+  margin: var(--space-sm) 0 var(--space-xs);
+  line-height: 1.1;
 }
 
 .rating {
@@ -155,8 +182,9 @@
 
 .ratingCount {
   font-size: 0.85rem;
-  color: var(--medium-gray);
+  color: var(--ink-muted);
   margin-left: var(--space-sm);
+  font-family: var(--font-accent);
 }
 
 .priceBlock {
@@ -169,31 +197,31 @@
 .price {
   font-family: var(--font-accent);
   font-weight: 800;
-  font-size: 2rem;
-  color: var(--white);
+  font-size: 1.8rem;
+  color: var(--ink);
 }
 
 .comparePrice {
-  font-size: 1.2rem;
-  color: var(--medium-gray);
+  font-size: 1.1rem;
+  color: var(--ink-muted);
   text-decoration: line-through;
 }
 
 .discount {
-  background: #FDECEA;
-  color: var(--accent-red);
+  background: rgba(212, 168, 83, 0.15);
+  color: #B2821E;
   font-family: var(--font-accent);
   font-weight: 600;
-  font-size: 0.8rem;
-  padding: 4px 12px;
+  font-size: 0.75rem;
+  padding: 4px 10px;
   border-radius: var(--radius-full);
 }
 
 .shortDesc {
-  font-size: 1rem;
-  color: var(--medium-gray);
-  line-height: 1.7;
-  margin-bottom: var(--space-lg);
+  font-size: 1.05rem;
+  color: var(--ink-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-xl);
 }
 
 /* Spice */
@@ -206,30 +234,36 @@
 
 .spiceLabel {
   font-family: var(--font-accent);
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .spiceText {
   font-size: 0.85rem;
-  color: var(--accent-red);
-  font-weight: 500;
+  color: var(--spice-red);
+  font-weight: 700;
 }
 
 .weightInfo {
-  font-size: 0.9rem;
-  color: var(--medium-gray);
+  font-size: 0.85rem;
+  color: var(--ink-muted);
   margin-bottom: var(--space-xl);
+  font-family: var(--font-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .weightInfo strong {
-  color: var(--white);
+  color: var(--ink);
 }
 
 /* Add to Cart */
 .addToCartBlock {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: var(--space-md);
   margin-bottom: var(--space-xl);
 }
@@ -237,24 +271,23 @@
 .qtySelector {
   display: flex;
   align-items: center;
-  border: 1px solid var(--medium-gray);
+  border: 1px solid var(--cream-border);
   border-radius: var(--radius-md);
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--white);
 }
 
 .qtySelector button {
   width: 44px;
-  height: 44px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
+  color: var(--ink);
   transition: all var(--transition-fast);
 }
 
 .qtySelector button:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--cream);
 }
 
 .qtySelector span {
@@ -263,6 +296,7 @@
   font-family: var(--font-accent);
   font-weight: 700;
   font-size: 1.05rem;
+  color: var(--ink);
 }
 
 /* Benefits */
@@ -271,7 +305,7 @@
   flex-direction: column;
   gap: var(--space-sm);
   padding-top: var(--space-lg);
-  border-top: 1px solid var(--light-gray);
+  border-top: 1px solid var(--cream-border);
 }
 
 .benefit {
@@ -279,11 +313,11 @@
   align-items: center;
   gap: var(--space-sm);
   font-size: 0.9rem;
-  color: var(--medium-gray);
+  color: var(--ink-muted);
 }
 
 .benefit svg {
-  color: var(--primary-yellow);
+  color: var(--spice-warm);
 }
 
 /* Tabs */
@@ -294,39 +328,41 @@
 .tabs {
   display: flex;
   gap: 0;
-  border-bottom: 2px solid var(--light-gray);
+  border-bottom: 1px solid var(--cream-border);
   margin-bottom: var(--space-xl);
 }
 
 .tab {
   padding: var(--space-md) var(--space-xl);
   font-family: var(--font-accent);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.95rem;
-  color: var(--medium-gray);
+  color: var(--ink-muted);
   border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
+  margin-bottom: -1px;
   transition: all var(--transition-base);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .tab:hover {
-  color: var(--white);
+  color: var(--ink);
 }
 
 .tab.active {
-  color: var(--primary-yellow);
-  border-bottom-color: var(--primary-yellow);
-  font-weight: 600;
+  color: var(--ink);
+  border-bottom-color: var(--spice-warm);
 }
 
 .tabContent {
   width: 100%;
+  max-width: 800px;
 }
 
 .tabContent p {
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.8;
-  color: #A0A0A0;
+  color: var(--ink);
 }
 
 /* Reviews Layout */
@@ -334,17 +370,20 @@
   display: grid;
   grid-template-columns: 1fr 380px;
   gap: var(--space-4xl);
+  max-width: 100%;
 }
 
 .reviewsList h3,
 .reviewFormBlock h3 {
   margin-bottom: var(--space-xl);
   font-family: var(--font-heading);
+  color: var(--ink);
+  font-size: 1.5rem;
 }
 
 .reviewItem {
   padding: var(--space-lg) 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--cream-border);
 }
 
 .reviewStars {
@@ -354,25 +393,29 @@
 }
 
 .reviewComment {
-  font-size: 0.95rem;
-  color: var(--light-gray);
+  font-size: 1.05rem;
+  color: var(--ink);
   line-height: 1.6;
   margin-bottom: var(--space-sm);
+  font-family: var(--font-serif);
+  font-style: italic;
 }
 
 .reviewAuthor {
   font-family: var(--font-accent);
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--medium-gray);
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* Review Form */
 .reviewFormBlock {
-  background: var(--dark-gray);
+  background: var(--cream);
   padding: var(--space-2xl);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--cream-border);
   height: max-content;
 }
 
@@ -384,8 +427,11 @@
   display: block;
   font-size: 0.85rem;
   font-family: var(--font-accent);
-  color: var(--medium-gray);
+  font-weight: 600;
+  color: var(--ink-muted);
   margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .starSelect {
@@ -394,7 +440,7 @@
 }
 
 .starBtn {
-  color: var(--white);
+  color: var(--cream-border);
   transition: transform 0.2s;
 }
 
@@ -403,20 +449,19 @@
 }
 
 .starBtn.activeStar svg {
-  fill: var(--primary-yellow);
+  fill: var(--spice-warm);
+  stroke: var(--spice-warm);
 }
 
-.reviewAuthor {
-  font-family: var(--font-accent);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--medium-gray);
+.textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 /* Related */
 .relatedSection {
-  background: var(--black);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--cream);
+  border-top: 1px solid var(--cream-border);
 }
 
 .relatedGrid {
@@ -432,7 +477,7 @@
   }
   .reviewsLayout {
     grid-template-columns: 1fr;
-    gap: var(--space-2xl);
+    gap: var(--space-3xl);
   }
 }
 
@@ -442,21 +487,18 @@
     gap: var(--space-2xl);
   }
 
-  .productImage {
+  .productGallery {
     position: relative;
     top: auto;
   }
 
-  .mainEmoji {
-    font-size: 6rem;
-  }
-
   .addToCartBlock {
     flex-direction: column;
+    align-items: stretch;
   }
 
-  .addToCartBlock .btn {
-    width: 100%;
+  .qtySelector {
+    justify-content: center;
   }
 
   .relatedGrid {
@@ -471,6 +513,6 @@
 
   .tab {
     white-space: nowrap;
-    padding: var(--space-md) var(--space-md);
+    padding: var(--space-md);
   }
 }

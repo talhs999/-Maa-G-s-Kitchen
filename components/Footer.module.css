@@ -1,17 +1,21 @@
+/* =================================
+   FOOTER — Minimalist Dark (Ink)
+   ================================= */
+
 .footer {
-  background: var(--black);
+  background: var(--ink);
   color: var(--white);
   padding-top: var(--space-4xl);
 }
 
 .footerInner {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
   gap: var(--space-3xl);
   padding-bottom: var(--space-3xl);
 }
 
-/* Brand Column */
+/* ---- Brand Column ---- */
 .brand {
   display: flex;
   flex-direction: column;
@@ -21,26 +25,28 @@
 
 .brandMaa {
   font-family: var(--font-heading);
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--primary-yellow);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.5px;
 }
 
 .brandKitchen {
   font-family: var(--font-accent);
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--spice-warm);
   text-transform: uppercase;
-  letter-spacing: 4px;
-  margin-top: 2px;
+  letter-spacing: 5px;
+  margin-top: 4px;
 }
 
 .brandDesc {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
-  line-height: 1.7;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.88rem;
+  line-height: 1.75;
   margin-bottom: var(--space-lg);
+  max-width: 280px;
 }
 
 .socials {
@@ -52,94 +58,88 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
   transition: all var(--transition-base);
 }
-
 .socialLink:hover {
-  background: var(--primary-yellow);
-  color: var(--black);
+  background: var(--spice-warm);
+  color: var(--white);
+  border-color: var(--spice-warm);
   transform: translateY(-3px);
 }
 
-/* Column Titles */
+/* ---- Column Titles ---- */
 .colTitle {
   font-family: var(--font-accent);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.78rem;
   color: var(--white);
   margin-bottom: var(--space-lg);
+  text-transform: uppercase;
+  letter-spacing: 2px;
   position: relative;
   padding-bottom: var(--space-sm);
 }
-
 .colTitle::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 30px;
-  height: 2px;
-  background: var(--primary-yellow);
+  width: 24px;
+  height: 1.5px;
+  background: var(--spice-warm);
   border-radius: var(--radius-full);
 }
 
-/* Link Lists */
-.linkList li {
-  margin-bottom: var(--space-sm);
-}
+/* ---- Link Lists ---- */
+.linkList li { margin-bottom: 0.65rem; }
 
 .linkList a {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.88rem;
   transition: color var(--transition-base);
-  display: inline-block;
-  position: relative;
 }
+.linkList a:hover { color: var(--white); }
 
-.linkList a:hover {
-  color: var(--primary-yellow);
-}
-
-/* Contact List */
+/* ---- Contact List ---- */
 .contactList li {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-sm);
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.88rem;
   margin-bottom: var(--space-md);
 }
-
 .contactList li svg {
-  color: var(--primary-yellow);
+  color: var(--spice-warm);
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
-/* Bottom Bar */
+/* ---- Bottom Bar ---- */
 .bottomBar {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255,255,255,0.07);
   padding: var(--space-lg) 0;
   text-align: center;
 }
-
 .bottomBar p {
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 0.85rem;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.82rem;
+  margin: 0;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
   .footerInner {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-2xl);
   }
 }
-
 @media (max-width: 480px) {
   .footerInner {
     grid-template-columns: 1fr;

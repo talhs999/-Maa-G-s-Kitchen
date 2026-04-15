@@ -1,3 +1,7 @@
+/* ==================================
+   BACKGROUND VECTORS — Elegant clean
+   ================================== */
+
 .vectorLayer {
   position: absolute;
   top: 0;
@@ -5,26 +9,28 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
   overflow: hidden;
 }
 
 .splash1 {
   position: absolute;
-  top: -100px;
-  right: -100px;
-  width: 600px;
-  height: 600px;
-  filter: blur(80px);
+  top: -150px;
+  right: -150px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(212,168,83,0.04) 0%, transparent 60%);
+  border-radius: 50%;
 }
 
 .splash2 {
   position: absolute;
-  bottom: 20%;
+  bottom: 10%;
   left: -200px;
-  width: 800px;
-  height: 800px;
-  filter: blur(100px);
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(212,168,83,0.03) 0%, transparent 60%);
+  border-radius: 50%;
 }
 
 .crossPattern {
@@ -34,6 +40,8 @@
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(circle at 2px 2px, rgba(255, 193, 7, 0.03) 1px, transparent 0);
-  background-size: 60px 60px;
+    linear-gradient(rgba(26,26,24,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,26,24,0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.4;
 }

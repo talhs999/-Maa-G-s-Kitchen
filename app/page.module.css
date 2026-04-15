@@ -1,4 +1,8 @@
-/* ===== PRODUCT GRID ===== */
+/* ================================
+   HOME PAGE — Minimalist Sections
+   ================================ */
+
+/* ===== FEATURED & BESTSELLERS ===== */
 .productGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -10,17 +14,36 @@
   margin-top: var(--space-3xl);
 }
 
-/* ===== ABOUT SECTION ===== */
+/* ===== FEATURED SECTION ===== */
+.featuredSection {
+  background: var(--cream);
+}
+
+/* ===== BESTSELLERS ===== */
+.bestsellersSection {
+  background: var(--white);
+  border-top: 1px solid var(--cream-border);
+  border-bottom: 1px solid var(--cream-border);
+}
+
+/* ===== OUR STORY (ABOUT) ===== */
 .aboutSection {
-  background: var(--primary-yellow);
-  color: var(--black);
+  background: var(--ink);
+  color: var(--white);
   padding: var(--space-4xl) 0;
 }
 
-.aboutSection h2,
-.aboutSection p,
 .aboutSection .section-label {
-  color: var(--black) !important;
+  color: var(--spice-warm) !important;
+}
+
+.aboutSection h2 {
+  color: var(--white) !important;
+  font-family: var(--font-heading);
+}
+
+.aboutSection p {
+  color: rgba(255,255,255,0.65) !important;
 }
 
 .aboutGrid {
@@ -40,7 +63,7 @@
   position: relative;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.4);
 }
 
 .realImg {
@@ -48,15 +71,19 @@
   transition: transform var(--transition-slow);
 }
 
+.aboutImageReal:hover .realImg {
+  transform: scale(1.04);
+}
+
 .aboutBadge {
   position: absolute;
   bottom: -20px;
   right: -20px;
-  background: var(--black);
+  background: var(--spice-warm);
   padding: var(--space-lg) var(--space-xl);
   text-align: center;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
 }
 
 .aboutBadgeNum {
@@ -64,48 +91,50 @@
   font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 800;
-  color: var(--primary-yellow);
+  color: var(--white);
   line-height: 1;
 }
 
 .aboutBadgeText {
   font-family: var(--font-accent);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: var(--white);
+  color: rgba(255,255,255,0.85);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  display: block;
+  margin-top: 4px;
 }
 
 .aboutContent h2 {
-  font-size: 3rem;
-  line-height: 1.1;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
   margin-bottom: var(--space-xl);
 }
 
 .aboutContent p {
-  color: rgba(0, 0, 0, 0.7);
   margin-bottom: var(--space-lg);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   line-height: 1.8;
 }
 
 /* ===== TESTIMONIALS ===== */
 .testimonialsSection {
-  background: var(--dark-gray);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--cream-dark);
+  border-top: 1px solid var(--cream-border);
 }
 
-.testimonialsSection .section-label {
-  color: var(--primary-yellow);
-}
-
-.testimonialsSection h2,
-.testimonialsSection p {
-  color: var(--white) !important;
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
 }
 
 /* ===== WHY CHOOSE US ===== */
+.whySection {
+  background: var(--white);
+}
+
 .whyGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -113,45 +142,51 @@
 }
 
 .whyCard {
-  background: var(--dark-gray);
+  background: var(--cream);
   border-radius: var(--radius-lg);
   padding: var(--space-2xl);
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--cream-border);
   transition: all var(--transition-base);
 }
 
 .whyCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-  border-color: rgba(255, 193, 7, 0.3);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+  background: var(--white);
 }
 
 .whyIcon {
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: rgba(255, 193, 7, 0.1);
-  color: var(--primary-yellow);
+  background: rgba(212,168,83,0.12);
+  color: var(--spice-warm);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto var(--space-md);
-  box-shadow: 0 0 20px rgba(255, 193, 7, 0.1);
+  transition: background var(--transition-base);
+}
+
+.whyCard:hover .whyIcon {
+  background: rgba(212,168,83,0.2);
 }
 
 .whyCard h3 {
-  font-family: var(--font-accent);
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
   margin-bottom: var(--space-sm);
-  color: var(--white);
+  color: var(--ink);
 }
 
 .whyCard p {
   font-size: 0.85rem;
-  line-height: 1.6;
-  color: #A0A0A0;
+  line-height: 1.65;
+  color: var(--ink-muted);
+  margin: 0;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -160,6 +195,9 @@
     grid-template-columns: repeat(3, 1fr);
   }
   .whyGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .reviewsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -194,7 +232,6 @@
   .productGrid {
     grid-template-columns: 1fr;
   }
-
   .whyGrid {
     grid-template-columns: 1fr;
   }

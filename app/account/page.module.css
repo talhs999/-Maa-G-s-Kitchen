@@ -1,58 +1,114 @@
+/* ==================================
+   ACCOUNT PAGE — Clean Minimalist
+   ================================== */
+
 .accountPage {
+  padding-top: calc(var(--header-height) + var(--space-2xl));
+  padding-bottom: var(--space-4xl);
+  background: var(--cream);
   min-height: 100vh;
-  padding: calc(var(--header-height) + var(--space-4xl)) 0 var(--space-4xl);
-  background: var(--black);
+}
+
+.loadingContainer {
+  padding-top: calc(var(--header-height) + var(--space-4xl));
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .accountHeader {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--space-3xl);
+  align-items: center;
+  margin-bottom: var(--space-4xl);
+  border-bottom: 2px solid var(--cream-border);
   padding-bottom: var(--space-xl);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.accountHeader h1 {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.accountHeader p {
+  color: var(--ink-muted);
+  font-size: 1rem;
+}
+
+.signOutBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-color: var(--ink-muted);
+  color: var(--ink);
+}
+.signOutBtn:hover {
+  background: var(--spice-red);
+  color: var(--white);
+  border-color: var(--spice-red);
 }
 
 .dashboardGrid {
   display: grid;
   grid-template-columns: 350px 1fr;
-  gap: var(--space-2xl);
+  gap: var(--space-3xl);
 }
 
 .card {
-  background: var(--dark-gray);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--white);
   border-radius: var(--radius-xl);
-  padding: var(--space-2xl);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  border: 1px solid var(--cream-border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
 }
 
 .cardHeader {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-xl);
-  padding-bottom: var(--space-md);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  background: var(--white);
+  border-bottom: 1px solid var(--cream-border);
+}
+
+.cardHeader h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin: 0;
+}
+
+.cardHeader svg {
+  color: var(--spice-warm);
+}
+
+.cardBody {
+  padding: var(--space-xl);
 }
 
 .cardBody p {
   margin-bottom: var(--space-sm);
+  color: var(--ink-muted);
   font-size: 0.95rem;
 }
 
+.cardBody p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Orders specific */
 .emptyState {
   text-align: center;
   padding: var(--space-3xl) 0;
 }
 
 .emptyIcon {
-  color: var(--medium-gray);
+  color: var(--cream-border);
   margin-bottom: var(--space-md);
-}
-
-.emptyState p {
-  margin-bottom: var(--space-xl);
 }
 
 .tableWrapper {
@@ -64,71 +120,59 @@
   border-collapse: collapse;
 }
 
-.ordersTable th,
+.ordersTable th {
+  text-align: left;
+  padding: var(--space-md);
+  padding-top: 0;
+  font-family: var(--font-accent);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border-bottom: 1px solid var(--cream-border);
+}
+
 .ordersTable td {
   padding: var(--space-md);
-  text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.ordersTable th {
-  font-family: var(--font-accent);
-  font-weight: 600;
-  color: var(--white);
-  font-size: 0.9rem;
-}
-
-.ordersTable td {
-  color: #A0A0A0;
   font-size: 0.95rem;
+  color: var(--ink);
+  border-bottom: 1px solid var(--cream-border);
+}
+
+.ordersTable tr:last-child td {
+  border-bottom: none;
 }
 
 .statusBadge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 4px 12px;
   border-radius: var(--radius-full);
+  font-family: var(--font-accent);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--white);
 }
 
-.statusPending {
-  background: rgba(255, 193, 7, 0.15);
-  color: var(--primary-yellow);
+.statusPending, .statusProcessing {
+  background: rgba(212, 168, 83, 0.15);
+  color: #B2821E;
 }
 
-.statusShipped {
-  background: rgba(33, 150, 243, 0.15);
-  color: #64B5F6;
-}
-
-.statusDelivered {
-  background: rgba(76, 175, 80, 0.15);
-  color: #81C784;
-}
-
-.statusCancelled {
-  background: rgba(244, 67, 54, 0.15);
-  color: #E57373;
-}
-
-.loadingContainer {
-  padding: calc(var(--header-height) + var(--space-4xl)) var(--space-lg);
-  max-width: var(--max-width);
-  margin: 0 auto;
+.statusShipped, .statusDelivered {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
 }
 
 @media (max-width: 1024px) {
   .dashboardGrid {
     grid-template-columns: 1fr;
+    gap: var(--space-2xl);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .accountHeader {
     flex-direction: column;
-    gap: var(--space-md);
+    align-items: flex-start;
+    gap: var(--space-lg);
   }
 }

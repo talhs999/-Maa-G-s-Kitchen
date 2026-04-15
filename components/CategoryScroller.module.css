@@ -1,7 +1,23 @@
+/* ================================
+   CATEGORY SCROLLER — Bottle Cards
+   ================================ */
+
 .section {
-  background: var(--black);
+  background: var(--cream-dark);
+  border-top: 1px solid var(--cream-border);
+  border-bottom: 1px solid var(--cream-border);
 }
 
+.header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+.header p {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ---- Scroll wrapper ---- */
 .scrollWrapper {
   position: relative;
 }
@@ -13,116 +29,149 @@
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding: var(--space-md) 0;
+  padding: var(--space-md) var(--space-xs) var(--space-xl);
 }
+.scroller::-webkit-scrollbar { display: none; }
 
-.scroller::-webkit-scrollbar {
-  display: none;
-}
-
+/* ---- Scroll buttons ---- */
 .scrollBtn {
   position: absolute;
-  top: 50%;
+  top: 45%;
   transform: translateY(-50%);
   z-index: 5;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: var(--white);
-  color: var(--black);
+  color: var(--ink);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-md);
+  border: 1px solid var(--cream-border);
   transition: all var(--transition-base);
 }
-
 .scrollBtn:hover {
-  background: var(--primary-yellow);
-  box-shadow: var(--shadow-yellow);
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+  box-shadow: var(--shadow-lg);
 }
+.scrollLeft  { left: -20px; }
+.scrollRight { right: -20px; }
 
-.scrollLeft {
-  left: -22px;
-}
-
-.scrollRight {
-  right: -22px;
-}
-
-/* Card */
+/* =====================================
+   CARD — Premium bottle-forward design
+   ===================================== */
 .card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
-  background: var(--dark-gray);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  min-width: 280px;
-  max-width: 280px;
+  background: var(--white);
+  border: 1px solid var(--cream-border);
+  border-radius: var(--radius-xl);
+  min-width: 260px;
+  max-width: 260px;
   scroll-snap-align: start;
+  overflow: hidden;
   transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 193, 7, 0.2);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
 }
 
-.cardIcon {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  margin: 0 auto var(--space-lg);
+/* ---- Bottle image area ---- */
+.bottleWrap {
   position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  background: var(--black);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--cream);
 }
 
-.catImage {
-  object-fit: cover;
+.bottleBg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  transition: opacity var(--transition-slow);
+}
+.card:hover .bottleBg {
+  opacity: 0.2;
+}
+
+.bottleImg {
+  object-fit: contain;
+  padding: 20px 30px;
   transition: transform var(--transition-slow);
+  filter: drop-shadow(0 12px 24px rgba(26,26,24,0.18));
+}
+.card:hover .bottleImg {
+  transform: scale(1.06) translateY(-6px);
+  filter: drop-shadow(0 20px 36px rgba(26,26,24,0.22));
 }
 
-.card:hover .catImage {
-  transform: scale(1.1);
+/* ---- Info row ---- */
+.cardInfo {
+  padding: var(--space-lg) var(--space-lg) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  border-top: 1px solid var(--cream-border);
 }
 
 .cardName {
   font-family: var(--font-heading);
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: var(--space-xs);
-  color: var(--white);
+  color: var(--ink);
+  line-height: 1.3;
+  margin: 0;
 }
 
 .cardDesc {
-  font-size: 0.85rem;
-  color: #A0A0A0;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
   line-height: 1.5;
-  margin-bottom: var(--space-md);
+  margin: 0;
 }
 
 .shopLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--font-accent);
   font-weight: 600;
-  font-size: 0.85rem;
-  transition: all var(--transition-base);
-}
-
-.card:hover .shopLink {
+  font-size: 0.8rem;
+  color: var(--ink);
+  text-transform: uppercase;
   letter-spacing: 1px;
+  margin-top: var(--space-sm);
+  transition: gap var(--transition-base);
 }
+.card:hover .shopLink { gap: 10px; }
 
+.arrow {
+  transition: transform var(--transition-base);
+  display: inline-block;
+}
+.card:hover .arrow { transform: translateX(4px); }
+
+/* ---- Responsive ---- */
 @media (max-width: 768px) {
-  .scrollBtn {
-    display: none;
-  }
-
+  .scrollBtn { display: none; }
   .card {
-    width: 220px;
+    min-width: 220px;
+    max-width: 220px;
   }
+}
+@media (max-width: 480px) {
+  .card {
+    min-width: 180px;
+    max-width: 180px;
+  }
+  .cardName { font-size: 0.95rem; }
 }

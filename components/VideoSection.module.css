@@ -1,0 +1,72 @@
+/* ==================================
+   VIDEO SECTION — Vertical Shorts
+   ================================== */
+
+.videoSection {
+  background: var(--white);
+  border-top: 1px solid var(--cream-border);
+  padding: var(--space-4xl) 0;
+}
+
+.videoSection .section-label {
+  color: var(--spice-warm);
+}
+
+.videoSection h2 {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+}
+
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-3xl);
+}
+
+.videoCard {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--ink); /* Fallback */
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--cream-border);
+  transition: transform var(--transition-slow);
+}
+
+.videoCard:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.videoContent {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 26, 24, 0) 60%,
+    rgba(26, 26, 24, 0.4) 100%
+  );
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .videoGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+}
+
+@media (max-width: 600px) {
+  .videoGrid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for shorts on mobile looks good */
+    gap: var(--space-md);
+  }
+}

@@ -59,7 +59,7 @@ export default function Footer() {
             </li>
             <li>
               <MapPin size={16} />
-              <span>Karachi, Pakistan</span>
+              <span>Lahore, Pakistan</span>
             </li>
           </ul>
         </div>

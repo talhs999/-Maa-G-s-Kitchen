@@ -13,9 +13,8 @@ export default function CategoryScroller() {
 
   const scroll = (direction) => {
     if (scrollRef.current) {
-      const scrollAmount = 300;
       scrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        left: direction === 'left' ? -320 : 320,
         behavior: 'smooth',
       });
     }
@@ -25,45 +24,68 @@ export default function CategoryScroller() {
     <section className={`section ${styles.section}`}>
       <div className="container">
         <motion.div
-          className="section-header"
+          className={styles.header}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className="section-label">Browse Categories</span>
-          <h2>What Are You Craving?</h2>
-          <p>Explore our range of authentic homemade products, each crafted with love and tradition.</p>
+          <span className="section-label">Our Range</span>
+          <h2>Explore the Collection</h2>
+          <p>Handcrafted small-batch sauces made with authentic Pakistani recipes and the finest ingredients.</p>
         </motion.div>
 
         <div className={styles.scrollWrapper}>
-          <button className={`${styles.scrollBtn} ${styles.scrollLeft}`} onClick={() => scroll('left')} aria-label="Scroll left">
-            <ChevronLeft size={20} />
+          <button
+            className={`${styles.scrollBtn} ${styles.scrollLeft}`}
+            onClick={() => scroll('left')}
+            aria-label="Scroll left"
+          >
+            <ChevronLeft size={18} strokeWidth={2} />
           </button>
 
           <div className={styles.scroller} ref={scrollRef}>
             {categories.map((cat, i) => (
               <motion.div
                 key={cat.slug}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
               >
                 <Link href={`/shop?category=${cat.slug}`} className={styles.card}>
-                  <div className={styles.cardIcon}>
-                    <Image src={cat.image} alt={cat.name} fill className={styles.catImage} />
+                  {/* Bottle image */}
+                  <div className={styles.bottleWrap}>
+                    <div className={styles.bottleBg} style={{ background: cat.bgColor }} />
+                    <Image
+                      src={cat.image}
+                      alt={cat.name}
+                      fill
+                      className={styles.bottleImg}
+                      sizes="(max-width: 768px) 50vw, 280px"
+                    />
                   </div>
-                  <h3 className={styles.cardName}>{cat.name}</h3>
-                  <p className={styles.cardDesc}>{cat.description}</p>
-                  <span className={styles.shopLink} style={{ color: cat.color }}>Shop Now →</span>
+
+                  {/* Info */}
+                  <div className={styles.cardInfo}>
+                    <h3 className={styles.cardName}>{cat.name}</h3>
+                    <p className={styles.cardDesc}>{cat.description}</p>
+                    <span className={styles.shopLink}>
+                      Shop Now
+                      <span className={styles.arrow}>→</span>
+                    </span>
+                  </div>
                 </Link>
               </motion.div>
             ))}
           </div>
 
-          <button className={`${styles.scrollBtn} ${styles.scrollRight}`} onClick={() => scroll('right')} aria-label="Scroll right">
-            <ChevronRight size={20} />
+          <button
+            className={`${styles.scrollBtn} ${styles.scrollRight}`}
+            onClick={() => scroll('right')}
+            aria-label="Scroll right"
+          >
+            <ChevronRight size={18} strokeWidth={2} />
           </button>
         </div>
       </div>

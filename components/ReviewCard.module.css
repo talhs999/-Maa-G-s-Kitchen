@@ -1,68 +1,83 @@
+/* ==================================
+   REVIEW CARD — Clean testmonials
+   ================================== */
+
 .card {
   background: var(--white);
   border-radius: var(--radius-lg);
   padding: var(--space-2xl);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--cream-border);
   transition: all var(--transition-base);
   position: relative;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
-  border-color: rgba(255, 193, 7, 0.2);
+  border-color: rgba(26,26,24,0.08);
 }
 
 .quoteIcon {
   position: absolute;
-  top: 16px;
-  right: 20px;
-  color: var(--light-yellow);
+  top: 24px;
+  right: 24px;
+  color: var(--cream-border);
 }
 
 .stars {
   display: flex;
   gap: 2px;
   margin-bottom: var(--space-md);
+  color: var(--spice-warm);
 }
 
 .comment {
   font-size: 0.95rem;
-  color: var(--dark-gray);
+  color: var(--ink-light);
   line-height: 1.7;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  font-family: var(--font-serif);
   font-style: italic;
+  flex-grow: 1;
 }
 
 .author {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
+  border-top: 1px solid var(--cream-border);
+  padding-top: var(--space-md);
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: var(--primary-yellow);
-  color: var(--black);
+  background: var(--cream);
+  color: var(--spice-warm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-accent);
+  font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  border: 1px solid var(--cream-border);
 }
 
 .name {
   font-family: var(--font-accent);
   font-weight: 600;
-  font-size: 0.9rem;
-  color: var(--black);
+  font-size: 0.85rem;
+  color: var(--ink);
   display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .date {
   font-size: 0.75rem;
-  color: var(--medium-gray);
+  color: var(--ink-muted);
 }

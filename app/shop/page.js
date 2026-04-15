@@ -110,13 +110,13 @@ export default function ShopPage() {
               >
                 All Products
               </button>
-              {categories.map((cat) => (
+              {Array.from(new Set(sampleProducts.map(p => p.category))).map((catName) => (
                 <button
-                  key={cat.slug}
-                  className={`${styles.catBtn} ${selectedCategory === cat.name ? styles.active : ''}`}
-                  onClick={() => setSelectedCategory(cat.name)}
+                  key={catName}
+                  className={`${styles.catBtn} ${selectedCategory === catName ? styles.active : ''}`}
+                  onClick={() => setSelectedCategory(catName)}
                 >
-                  {cat.icon} {cat.name}
+                  {catName}
                 </button>
               ))}
             </div>

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Flame, Leaf, ShieldCheck, Heart, ArrowRight } from 'lucide-react';
+import { Flame, Leaf, ShieldCheck, Heart, ArrowRight, ChefHat, Sun, Zap } from 'lucide-react';
 import Hero from '@/components/Hero';
 import CategoryScroller from '@/components/CategoryScroller';
 import ProductCard from '@/components/ProductCard';
@@ -13,6 +13,7 @@ import ProcessSection from '@/components/ProcessSection';
 import MapSection from '@/components/MapSection';
 import HomeGuarantee from '@/components/HomeGuarantee';
 import BackgroundVectors from '@/components/BackgroundVectors';
+import VideoSection from '@/components/VideoSection';
 import { sampleProducts, sampleReviews } from '@/lib/sampleData';
 import styles from './page.module.css';
 
@@ -68,10 +69,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Traditional Process */}
-      <ProcessSection />
-
-      {/* About Teaser */}
+      {/* Our Story (Heritage) */}
       <section className={`section ${styles.aboutSection}`}>
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div className={styles.aboutGrid}>
@@ -84,9 +82,10 @@ export default function Home() {
             >
               <div className={styles.aboutImageReal}>
                 <Image 
-                  src="https://images.unsplash.com/photo-1556910103-1c02745a8728?q=80&w=800&auto=format&fit=crop" 
+                  src="https://images.unsplash.com/photo-1596484552834-6ca035db2038?q=80&w=800&auto=format&fit=crop" 
                   alt="Maa G in the kitchen" 
                   fill 
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className={styles.realImg}
                   priority
                 />
@@ -105,24 +104,90 @@ export default function Home() {
               transition={{ duration: 0.7 }}
             >
               <span className="section-label">Our Story</span>
-              <h2>Made with Love, Served with Pride</h2>
+              <h2>A Legacy of Love & Flavor</h2>
               <p>
-                What started in Maa G&apos;s humble kitchen over 25 years ago has grown into a beloved
-                brand trusted by families across Pakistan. Our recipes have been passed down through
-                three generations.
+                The story of Maa G&apos;s Kitchen began over 25 years ago in a small family kitchen in Lahore. 
+                What started as a labor of love for her children soon became a celebration for the entire community. 
+                Maa G believes that the heartbeat of a home is its kitchen, and the soul of a meal is the love put into it.
               </p>
               <p>
-                Every jar is a labor of love — hand-mixed, slow-cooked, and
-                prepared with the same care as if we were cooking for our own family.
+                Every recipe we share today has been meticulously preserved and passed down through three generations. 
+                We don&apos;t just sell sauces and pickles; we share a part of our heritage with you.
               </p>
               <Link href="/about" className="btn btn-primary">
-                Read Our Story <ArrowRight size={18} />
+                Explore Our Heritage <ArrowRight size={18} />
               </Link>
             </motion.div>
           </div>
         </div>
       </section>
 
+      {/* Why Choose Us (About Us / Values) */}
+      <section className={`section ${styles.whySection}`}>
+        <div className="container">
+          <motion.div
+            className="section-header"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="section-label">Why Maa G&apos;s?</span>
+            <h2>Purely Homemade, No Compromises</h2>
+            <p>We pride ourselves on maintaining the highest standards of quality and authenticity.</p>
+          </motion.div>
+
+          <div className={styles.whyGrid}>
+            <motion.div 
+              className={styles.whyCard}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <div className={styles.whyIcon}><ChefHat /></div>
+              <h3>100% Homemade</h3>
+              <p>No factories, no industrial machines. Every batch is cooked by hand in a real kitchen.</p>
+            </motion.div>
+
+            <motion.div 
+              className={styles.whyCard}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className={styles.whyIcon}><ShieldCheck /></div>
+              <h3>No Preservatives</h3>
+              <p>We use natural preservation methods—oil, salt, and vinegar—just like our ancestors did.</p>
+            </motion.div>
+
+            <motion.div 
+              className={styles.whyCard}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <div className={styles.whyIcon}><Leaf /></div>
+              <h3>Organic Ingredients</h3>
+              <p>Sourced directly from local farmers to ensure the freshest produce for our recipes.</p>
+            </motion.div>
+
+            <motion.div 
+              className={styles.whyCard}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <div className={styles.whyIcon}><Sun /></div>
+              <h3>Traditional Curing</h3>
+              <p>Our pickles are cured naturally under the sun, allowing flavors to develop patiently.</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
       {/* Bestsellers */}
       <section className={`section ${styles.bestsellersSection}`}>
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
@@ -144,6 +209,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Traditional Process */}
+      <ProcessSection />
 
       {/* Testimonials */}
       <section className={`section ${styles.testimonialsSection}`}>
@@ -167,8 +235,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Visit Us Map */}
-      <MapSection />
+      {/* Video Shorts Section */}
+      <VideoSection />
 
       {/* Newsletter */}
       <Newsletter />

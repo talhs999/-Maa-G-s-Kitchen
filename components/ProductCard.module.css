@@ -1,15 +1,20 @@
+/* ===============================
+   PRODUCT CARD — Minimalist White
+   =============================== */
+
 .card {
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--dark-gray);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--white);
+  border: 1px solid var(--cream-border);
   transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
 }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
-  border-color: rgba(255, 193, 7, 0.3);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
 }
 
 .cardLink {
@@ -18,12 +23,12 @@
   color: inherit;
 }
 
-/* Image */
+/* ---- Image ---- */
 .imageWrapper {
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
-  background: #000;
+  background: var(--cream);
 }
 
 .imagePlaceholder {
@@ -32,7 +37,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  background: var(--cream-dark);
   transition: transform var(--transition-slow);
 }
 
@@ -44,40 +49,45 @@
 }
 
 .productImage {
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
   height: 100%;
+  padding: 24px;
+  filter: drop-shadow(0 8px 20px rgba(26,26,24,0.15));
+  transition: transform var(--transition-slow), filter var(--transition-slow);
 }
 
 .card:hover .imagePlaceholder,
 .card:hover .imageContainer {
-  transform: scale(1.05);
+  transform: scale(1.04);
+}
+
+.card:hover .productImage {
+  filter: drop-shadow(0 16px 32px rgba(26,26,24,0.22));
+  transform: translateY(-4px);
 }
 
 .placeholderEmoji {
-  font-size: 5rem;
-  filter: grayscale(0.2);
+  font-size: 4rem;
   transition: all var(--transition-slow);
 }
-
 .card:hover .placeholderEmoji {
-  transform: scale(1.1) rotate(5deg);
-  filter: grayscale(0);
+  transform: scale(1.1) rotate(4deg);
 }
 
-/* Badges */
+/* ---- Badges ---- */
 .badgeBestseller {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: var(--black);
-  color: var(--primary-yellow);
+  background: var(--ink);
+  color: var(--white);
   font-family: var(--font-accent);
   font-weight: 600;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 6px 14px;
+  letter-spacing: 0.6px;
+  padding: 5px 12px;
   border-radius: var(--radius-full);
   z-index: 2;
 }
@@ -86,32 +96,32 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  background: var(--accent-red);
+  background: var(--spice-red);
   color: var(--white);
   font-family: var(--font-accent);
   font-weight: 600;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: var(--radius-full);
   z-index: 2;
 }
 
-/* Quick Add Button */
+/* ---- Quick Add ---- */
 .quickAdd {
   position: absolute;
   bottom: 12px;
   left: 50%;
-  transform: translateX(-50%) translateY(20px);
+  transform: translateX(-50%) translateY(16px);
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: 12px 24px;
-  background: var(--primary-yellow);
-  color: var(--black);
+  padding: 11px 22px;
+  background: var(--ink);
+  color: var(--white);
   font-family: var(--font-accent);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   border-radius: var(--radius-full);
   opacity: 0;
   transition: all var(--transition-base);
@@ -126,11 +136,11 @@
 }
 
 .quickAdd:hover {
-  background: var(--dark-yellow);
-  box-shadow: var(--shadow-yellow);
+  background: var(--ink-light);
+  box-shadow: var(--shadow-lg);
 }
 
-/* Info */
+/* ---- Info ---- */
 .info {
   padding: var(--space-lg);
 }
@@ -138,25 +148,25 @@
 .category {
   font-family: var(--font-accent);
   font-weight: 600;
-  font-size: 0.75rem;
-  color: var(--primary-yellow);
+  font-size: 0.72rem;
+  color: var(--spice-warm);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
 }
 
 .name {
   font-family: var(--font-heading);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--white);
-  margin: 6px 0;
+  color: var(--ink);
+  margin: 6px 0 4px;
   line-height: 1.3;
 }
 
 .desc {
-  font-size: 0.85rem;
-  color: #D1D1D1;
-  line-height: 1.5;
+  font-size: 0.83rem;
+  color: var(--ink-muted);
+  line-height: 1.55;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -171,24 +181,20 @@
   margin-top: var(--space-sm);
 }
 
-/* Spice Dots */
+/* ---- Spice Dots ---- */
 .spiceDots {
   display: flex;
   gap: 3px;
 }
-
 .spiceDot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--light-gray);
+  background: var(--cream-border);
 }
+.spiceDot.active { background: var(--spice-red); }
 
-.spiceDot.active {
-  background: var(--accent-red);
-}
-
-/* Price */
+/* ---- Price ---- */
 .price {
   display: flex;
   align-items: center;
@@ -198,19 +204,19 @@
 .currentPrice {
   font-family: var(--font-accent);
   font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--white);
+  font-size: 1.05rem;
+  color: var(--ink);
 }
 
 .comparePrice {
-  font-size: 0.85rem;
-  color: #888;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
   text-decoration: line-through;
 }
 
 .weight {
-  font-size: 0.85rem;
-  color: #AAA;
-  margin-top: var(--space-xs);
-  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  margin-top: 2px;
+  font-weight: 400;
 }
