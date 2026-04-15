@@ -13,11 +13,12 @@
 
 .authContainer {
   background: var(--white);
-  padding: var(--space-4xl);
+  padding: var(--space-2xl);
   border-radius: var(--radius-2xl);
   max-width: 480px;
-  width: 90%;
-  box-shadow: var(--shadow-md);
+  width: 95%;
+  margin: 0 auto;
+  box-shadow: var(--shadow-xl);
   border: 1px solid var(--cream-border);
 }
 
@@ -57,8 +58,18 @@
 }
 
 .inputGroup input {
-  padding-left: 52px;
+  padding: 18px 18px 18px 52px;
   width: 100%;
+  font-size: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--cream-border);
+  background: #fdfdfd;
+}
+
+.inputGroup input:focus {
+  border-color: var(--ink);
+  outline: none;
+  background: var(--white);
 }
 
 .forgotPassword {

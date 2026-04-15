@@ -84,6 +84,18 @@ export default function Hero() {
           <div className={styles.timerWrapper}>
             <CountdownTimer targetDate={targetDate} />
           </div>
+
+          {/* Floating badge (Moved inside heroLeft for better document flow on mobile) */}
+          <motion.div
+            className={styles.heroBadge}
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.6, type: 'spring' }}
+            style={{ zIndex: 10 }}
+          >
+            <span className={styles.heroBadgeNum}>25+</span>
+            <span className={styles.heroBadgeText}>Years of Tradition</span>
+          </motion.div>
         </motion.div>
 
         {/* ── Right Image Panel ── */}
@@ -119,17 +131,6 @@ export default function Hero() {
             <div className={styles.heroPatternOverlay} />
           </div>
 
-          {/* Floating badge */}
-          <motion.div
-            className={styles.heroBadge}
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6, type: 'spring' }}
-            style={{ zIndex: 10 }}
-          >
-            <span className={styles.heroBadgeNum}>25+</span>
-            <span className={styles.heroBadgeText}>Years of Tradition</span>
-          </motion.div>
         </motion.div>
       </div>
     </section>
