@@ -232,40 +232,37 @@
 @media (max-width: 768px) {
   .shopGrid {
     grid-template-columns: 1fr;
+    gap: var(--space-xl);
   }
 
-  .filterToggle {
-    display: flex;
+  .toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+  }
+
+  .toolbarLeft {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .sidebar {
     position: fixed;
     top: 0;
-    left: -100%; /* Ensure it is fully off-screen */
-    width: 280px; /* Fixed width for the sliding panel */
+    left: -280px; /* Fixed negative left */
+    width: 280px; 
     bottom: 0;
-    background: var(--cream);
-    z-index: 1500;
+    background: var(--white);
+    z-index: 2100; /* Higher than header */
     padding: var(--space-xl);
     overflow-y: auto;
     transition: transform var(--transition-slow);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 10px 0 30px rgba(0,0,0,0.1);
   }
 
   .sidebar.open {
-    transform: translateX(100%); /* Slide it in */
-  }
-
-  .closeFilter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    color: var(--ink);
-    background: var(--white);
-    border: 1px solid var(--cream-border);
+    transform: translateX(280px); /* Slide in by its width */
   }
 
   .productsGrid {
