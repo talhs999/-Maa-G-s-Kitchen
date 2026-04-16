@@ -2,31 +2,64 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { CheckCircle, ShieldCheck } from 'lucide-react';
+import { CheckCircle, ShieldCheck, Printer, ArrowRight, Package, MapPin, Truck, User } from 'lucide-react';
 import { useCart } from '@/lib/cartContext';
+import { submitOrder } from '@/lib/supabase';
 import styles from './page.module.css';
 
 export default function CheckoutPage() {
   const { items, subtotal, shippingCost, total, clearCart, mounted } = useCart();
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
-  const [formData, setFormData] = useState({
-    name: '', email: '', phone: '',
-    address: '', city: '', postal: '', notes: '',
-  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [placedOrderData, setPlacedOrderData] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const orderNum = 'MGK-' + Date.now().toString(36).toUpperCase();
-    setOrderNumber(orderNum);
-    setOrderPlaced(true);
-    clearCart();
-    window.scrollTo(0, 0);
+    setIsSubmitting(true);
+
+    try {
+      const orderData = {
+        customer_name: formData.name,
+        customer_email: formData.email,
+        customer_phone: formData.phone,
+        address: formData.address,
+        city: formData.city,
+        postal_code: formData.postal,
+        notes: formData.notes,
+        subtotal: Number(subtotal),
+        shipping_cost: Number(shippingCost),
+        total: Number(total),
+        items: items.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image_url
+        }))
+      };
+
+      const result = await submitOrder(orderData);
+      
+      if (result.success) {
+        setOrderNumber(result.orderNumber);
+        setPlacedOrderData(orderData);
+        setOrderPlaced(true);
+        clearCart();
+        window.scrollTo(0, 0);
+      } else {
+        alert("Failed to place order: " + result.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An unexpected error occurred.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!mounted) return null;
@@ -35,23 +68,91 @@ export default function CheckoutPage() {
     return (
       <div className={styles.checkoutPage}>
         <section className={styles.successSection}>
-          <motion.div
-            className={styles.successContent}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <CheckCircle size={64} className={styles.successIcon} />
-            <h1>Order Placed Successfully! 🎉</h1>
-            <p>Thank you for your order. We&apos;ll send you a confirmation email shortly.</p>
-            <div className={styles.orderNum}>
-              <span>Order Number</span>
-              <strong>{orderNumber}</strong>
-            </div>
-            <Link href="/shop" className="btn btn-primary btn-lg">
-              Continue Shopping
-            </Link>
-          </motion.div>
+          <div className="container">
+            <motion.div
+              className={styles.invoiceCard}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className={styles.invoiceHeader}>
+                <div className={styles.invoiceBranding}>
+                  <div className={styles.invoiceLogo}>🍳</div>
+                  <div>
+                    <h2>MAA G'S KITCHEN</h2>
+                    <p>Homemade Goodness, Delivered.</p>
+                  </div>
+                </div>
+                <div className={styles.invoiceMeta}>
+                  <span className={styles.statusPill}>ORDER PLACED</span>
+                  <p><strong>Order ID:</strong> {orderNumber}</p>
+                  <p><strong>Date:</strong> {new Date().toLocaleDateString()}</p>
+                </div>
+              </div>
+
+              <div className={styles.invoiceGrid}>
+                <div className={styles.billingCol}>
+                  <h4><User size={16} /> Customer Details</h4>
+                  <p><strong>{placedOrderData?.customer_name}</strong></p>
+                  <p>{placedOrderData?.customer_email}</p>
+                  <p>{placedOrderData?.customer_phone}</p>
+                </div>
+                <div className={styles.shippingCol}>
+                  <h4><MapPin size={16} /> Delivery Address</h4>
+                  <p>{placedOrderData?.address}</p>
+                  <p>{placedOrderData?.city}, {placedOrderData?.postal_code}</p>
+                </div>
+              </div>
+
+              <div className={styles.invoiceTable}>
+                <div className={styles.tableHead}>
+                  <span>Item</span>
+                  <span>Qty</span>
+                  <span>Price</span>
+                  <span>Total</span>
+                </div>
+                {placedOrderData?.items.map((item, id) => (
+                  <div key={id} className={styles.tableRow}>
+                    <span>{item.name}</span>
+                    <span>{item.quantity}</span>
+                    <span>Rs. {item.price}</span>
+                    <span>Rs. {item.price * item.quantity}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className={styles.invoiceFooter}>
+                <div className={styles.summaryBox}>
+                  <div className={styles.summaryLine}>
+                    <span>Subtotal</span>
+                    <span>Rs. {placedOrderData?.subtotal}</span>
+                  </div>
+                  <div className={styles.summaryLine}>
+                    <span>Shipping Fee</span>
+                    <span>Rs. {placedOrderData?.shipping_cost}</span>
+                  </div>
+                  <div className={`${styles.summaryLine} ${styles.grandTotal}`}>
+                    <span>Grand Total</span>
+                    <span>Rs. {placedOrderData?.total}</span>
+                  </div>
+                  <div className={styles.paymentMethod}>
+                    <Truck size={14} /> Cash on Delivery
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.invoiceActions}>
+                <button onClick={() => window.print()} className="btn btn-outline">
+                  <Printer size={18} /> Print Invoice
+                </button>
+                <Link href="/account" className="btn btn-dark">
+                  <Package size={18} /> View Order History
+                </Link>
+                <Link href="/shop" className="btn btn-primary">
+                  Continue Shopping <ArrowRight size={18} />
+                </Link>
+              </div>
+            </motion.div>
+          </div>
         </section>
       </div>
     );
@@ -164,8 +265,13 @@ export default function CheckoutPage() {
                   <span>Cash on Delivery — Pay when you receive your order</span>
                 </div>
 
-                <button type="submit" className={`btn btn-primary btn-lg ${styles.submitBtn}`} style={{ width: '100%' }}>
-                  Place Order — Rs. {total}
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className={`btn btn-primary btn-lg ${styles.submitBtn}`} 
+                  style={{ width: '100%' }}
+                >
+                  {isSubmitting ? 'Processing...' : `Place Order — Rs. ${total}`}
                 </button>
               </div>
             </div>

@@ -235,67 +235,210 @@
   margin-bottom: var(--space-xl);
 }
 
-.orderNum {
-  background: var(--cream);
-  padding: var(--space-lg);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-xl);
-  display: flex;
-  flex-direction: column;
+/* Invoice Card & Success UI */
+.invoiceCard {
+  background: var(--white);
+  padding: 3rem;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--cream-border);
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
 }
 
-.orderNum span {
-  font-size: 0.85rem;
-  color: var(--ink-muted);
-  text-transform: uppercase;
+.invoiceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--cream);
+}
+
+.invoiceBranding {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.invoiceLogo {
+  width: 60px;
+  height: 60px;
+  background: var(--ink);
+  color: var(--white);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.invoiceBranding h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--ink);
   letter-spacing: 1px;
 }
 
-.orderNum strong {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  color: var(--ink);
-  letter-spacing: 2px;
+.invoiceMeta {
+  text-align: right;
 }
 
-@media (max-width: 1024px) {
-  .checkoutGrid {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
+.statusPill {
+  display: inline-block;
+  background: #10B981;
+  color: var(--white);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.invoiceMeta p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.invoiceGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.billingCol h4, .shippingCol h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-accent);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border-bottom: 1px solid var(--cream);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.billingCol p, .shippingCol p {
+  margin: 4px 0;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.invoiceTable {
+  margin-bottom: 3rem;
+}
+
+.tableHead {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  padding: 12px 16px;
+  background: var(--cream);
+  font-weight: 700;
+  font-family: var(--font-accent);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border-radius: 8px;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  padding: 16px;
+  border-bottom: 1px solid var(--cream);
+  font-size: 0.95rem;
+}
+
+.invoiceFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 3rem;
+}
+
+.summaryBox {
+  width: 300px;
+}
+
+.summaryLine {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+}
+
+.grandTotal {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--cream);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.paymentMethod {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #10B981;
+  font-weight: 600;
+}
+
+.invoiceActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  border-top: 2px solid var(--cream);
+  padding-top: 2.5rem;
+}
+
+@media print {
+  .invoiceActions, .hero, :global(header), :global(footer), :global(.offerSlider) {
+    display: none !important;
+  }
+  .invoiceCard {
+    box-shadow: none;
+    border: none;
+    padding: 0;
   }
 }
 
 @media (max-width: 768px) {
-  .checkoutContent {
-    padding: var(--space-xl) 0;
+  .invoiceCard {
+    padding: 1.5rem;
   }
-  .formRow {
+  .invoiceHeader {
     flex-direction: column;
-    gap: var(--space-md);
+    gap: 1.5rem;
+    text-align: center;
   }
-  .formSection {
-    padding: var(--space-xl);
-    border-radius: var(--radius-lg);
+  .invoiceBranding {
+    flex-direction: column;
+    text-align: center;
   }
-  
-  /* High contrast Place Order button */
-  .submitBtn {
-    background: var(--white) !important;
-    color: var(--black) !important;
-    border: 2px solid var(--black);
-    font-weight: 800;
-    padding: 18px !important;
-    transition: all 0.3s ease;
+  .invoiceMeta {
+    text-align: center;
+    width: 100%;
   }
-  .submitBtn:hover {
-    background: var(--black) !important;
-    color: var(--white) !important;
+  .invoiceGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-  .orderSummary {
-    padding: var(--space-xl);
-    border-radius: var(--radius-lg);
+  .tableHead {
+    display: none;
   }
-  .hero {
-    padding: var(--space-2xl) 0;
+  .tableRow {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .invoiceActions {
+    flex-direction: column;
   }
 }

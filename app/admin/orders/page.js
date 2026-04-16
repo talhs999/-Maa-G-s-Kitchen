@@ -12,14 +12,14 @@ const STATUS_COLORS = {
   cancelled:  { bg: '#FEE2E2', text: '#DC2626' },
 };
 
-const SAMPLE_ORDERS = [
-  { id: '1', order_number: '#288D1AFA', customer_name: 'Muhammad Talha Khan', customer_email: 'talha@test.com', created_at: new Date().toISOString(), status: 'pending', total_amount: 193.96, items: [] },
-  { id: '2', order_number: '#D975C392', customer_name: 'Kitchen Admin', customer_email: 'admin@kitchen.com', created_at: new Date(Date.now() - 86400000).toISOString(), status: 'cancelled', total_amount: 150.00, items: [] },
-  { id: '3', order_number: '#E1D80003', customer_name: 'Kitchen Admin', customer_email: 'admin@kitchen.com', created_at: new Date(Date.now() - 172800000).toISOString(), status: 'delivered', total_amount: 69.59, items: [] },
-  { id: '4', order_number: '#95501CA9', customer_name: 'Kitchen Admin', customer_email: 'admin@kitchen.com', created_at: new Date(Date.now() - 172800000).toISOString(), status: 'pending', total_amount: 162.30, items: [] },
-  { id: '5', order_number: '#C6E2FB1B', customer_name: 'Kitchen Admin', customer_email: 'admin@kitchen.com', created_at: new Date(Date.now() - 259200000).toISOString(), status: 'pending', total_amount: 139.00, items: [] },
-  { id: '6', order_number: '#F127C993', customer_name: 'Test User', customer_email: 'test@test.com', created_at: new Date(Date.now() - 345600000).toISOString(), status: 'delivered', total_amount: 166.99, items: [] },
-];
+const STATUSES = ['', 'pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+const STATUS_COLORS = {
+  pending:    { bg: '#FEF3C7', text: '#D97706' },
+  processing: { bg: '#DBEAFE', text: '#2563EB' },
+  shipped:    { bg: '#EDE9FE', text: '#7C3AED' },
+  delivered:  { bg: '#D1FAE5', text: '#059669' },
+  cancelled:  { bg: '#FEE2E2', text: '#DC2626' },
+};
 
 function Badge({ status }) {
   const c = STATUS_COLORS[status?.toLowerCase()] || STATUS_COLORS.pending;
@@ -38,15 +38,15 @@ export default function OrdersPage() {
   const PER_PAGE = 10;
 
   useEffect(() => {
-    if (!localStorage.getItem('admin_session')) router.push('/admin');
-    else fetchOrders();
+    fetchOrders();
   }, []);
 
   const fetchOrders = async () => {
     setLoading(true);
-    if (!supabase) { setOrders(SAMPLE_ORDERS); setLoading(false); return; }
-    const { data } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
-    setOrders(data?.length ? data : SAMPLE_ORDERS);
+    if (!supabase) { setOrders([]); setLoading(false); return; }
+    const { data, error } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
+    if (error) console.error(error);
+    setOrders(data || []);
     setLoading(false);
   };
 
@@ -65,7 +65,7 @@ export default function OrdersPage() {
     showToast('Deleted!'); fetchOrders(); setSelected(null);
   };
 
-  const fmt = n => `$${Number(n).toFixed(2)}`;
+  const fmt = n => `Rs. ${Number(n).toLocaleString()}`;
   const fmtDate = d => new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
   const filtered = orders.filter(o => {
@@ -90,7 +90,7 @@ export default function OrdersPage() {
           <p style={{ color: '#64748b', fontSize: '0.9rem', marginTop: 2 }}>{filtered.length} orders found</p>
         </div>
         <button onClick={() => {
-          const csv = ['Order ID,Customer,Date,Status,Total', ...filtered.map(o => `${o.order_number},${o.customer_name || o.customer_email},${fmtDate(o.created_at)},${o.status},${o.total_amount}`)].join('\n');
+          const csv = ['Order ID,Customer,Date,Status,Total', ...filtered.map(o => `${o.order_number},${o.customer_name || o.customer_email},${fmtDate(o.created_at)},${o.status},${o.total}`)].join('\n');
           const a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv); a.download = 'orders.csv'; a.click();
         }} style={{ padding: '0.65rem 1.25rem', background: '#fff', color: '#334155', border: '1px solid #e2e8f0', borderRadius: 8, fontWeight: 600, cursor: 'pointer', fontSize: '0.88rem' }}>
           📥 Export CSV
@@ -130,7 +130,7 @@ export default function OrdersPage() {
                     <td style={{ padding: '0.85rem 1rem', color: '#334155', fontWeight: 500 }}>{o.customer_name || o.customer_email}</td>
                     <td style={{ padding: '0.85rem 1rem', color: '#64748b', whiteSpace: 'nowrap' }}>{fmtDate(o.created_at)}</td>
                     <td style={{ padding: '0.85rem 1rem' }}><Badge status={o.status} /></td>
-                    <td style={{ padding: '0.85rem 1rem', fontWeight: 700 }}>{fmt(o.total_amount)}</td>
+                    <td style={{ padding: '0.85rem 1rem', fontWeight: 700 }}>{fmt(o.total)}</td>
                     <td style={{ padding: '0.85rem 1rem' }} onClick={e => e.stopPropagation()}>
                       <div style={{ display: 'flex', gap: '0.4rem' }}>
                         <select value={o.status} onChange={e => updateStatus(o.id, e.target.value)} style={{ padding: '3px 6px', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: '0.78rem', background: '#fff', cursor: 'pointer' }}>
@@ -198,7 +198,7 @@ export default function OrdersPage() {
               <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0' }} />
               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: '1rem' }}>
                 <span>Total</span>
-                <span style={{ color: '#0f172a' }}>{fmt(selected.total_amount)}</span>
+                <span style={{ color: '#0f172a' }}>{fmt(selected.total)}</span>
               </div>
               <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
                 <button onClick={() => window.print()} style={{ flex: 1, padding: '0.6rem', background: '#f1f5f9', color: '#334155', border: '1px solid #e2e8f0', borderRadius: 8, cursor: 'pointer', fontWeight: 600, fontSize: '0.82rem' }}>🖨️ Print</button>

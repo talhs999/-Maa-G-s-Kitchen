@@ -17,26 +17,46 @@ export default function UsersPage() {
   const [toast, setToast] = useState(null);
 
   useEffect(() => {
-    if (!localStorage.getItem('admin_session')) router.push('/admin');
-    else fetchUsers();
+    fetchUsers();
   }, []);
 
   const fetchUsers = async () => {
     setLoading(true);
-    if (!supabase || !supabase.auth.admin) { setUsers(SAMPLE_USERS); setLoading(false); return; }
+    if (!supabase) { setUsers(SAMPLE_USERS); setLoading(false); return; }
     
-    // In a real app, you need a backend route or service_role key to list users
-    // This is a placeholder for the UI
-    const { data: { users }, error } = await supabase.auth.admin.listUsers();
-    setUsers(users?.length ? users.map(u => ({ ...u, role: u.email === 'admin@kitchen.com' ? 'Super Admin' : 'Customer' })) : SAMPLE_USERS);
+    // Fetching from the community 'user_roles' table we created
+    const { data, error } = await supabase
+      .from('user_roles')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error(error);
+      setUsers(SAMPLE_USERS);
+    } else if (data && data.length > 0) {
+      setUsers(data);
+    } else {
+      setUsers(SAMPLE_USERS);
+    }
     setLoading(false);
   };
 
   const showToast = (msg, type = 'success') => { setToast({ msg, type }); setTimeout(() => setToast(null), 3000); };
 
-  const updateRole = (id, role) => {
-    setUsers(prev => prev.map(u => u.id === id ? { ...u, role } : u));
-    showToast(`Role updated to ${role}`);
+  const updateRole = async (id, role) => {
+    if (!supabase) {
+      setUsers(prev => prev.map(u => u.id === id ? { ...u, role } : u));
+      showToast(`Role updated to ${role}`);
+      return;
+    }
+
+    const { error } = await supabase.from('user_roles').update({ role }).eq('id', id);
+    if (error) {
+      showToast(error.message, 'error');
+    } else {
+      setUsers(prev => prev.map(u => u.id === id ? { ...u, role } : u));
+      showToast(`Role updated to ${role}`);
+    }
   };
 
   const handleDelete = (id) => {

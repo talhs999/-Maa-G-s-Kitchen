@@ -134,7 +134,7 @@ export default function AccountPage() {
                             </span>
                             
                             <strong className={styles.orderTotal}>
-                              ${order.total_amount ? typeof order.total_amount === 'number' ? order.total_amount.toFixed(2) : order.total_amount : '0.00'}
+                              Rs. {order.total ? Number(order.total).toLocaleString() : '0'}
                             </strong>
                             
                             <button className={styles.deleteBtn}>

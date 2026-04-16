@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase';
 
 const NAV_ITEMS = [
   { href: '/admin/dashboard', icon: '📊', label: 'Dashboard' },
@@ -21,29 +22,67 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const [admin, setAdmin] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const session = localStorage.getItem('admin_session');
-    if (!session) {
-      router.push('/admin');
-      return;
-    }
-    try {
-      setAdmin(JSON.parse(session));
-    } catch {
-      router.push('/admin');
-    }
+    const checkAuth = async () => {
+      if (!supabase) {
+        setLoading(false);
+        return;
+      }
+
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        router.push('/');
+        return;
+      }
+
+      const userEmail = session.user.email;
+      
+      // Strict role check: Admin email list or check user_roles table
+      const adminEmails = ['admin@kitchen.com', 'superadmin@kitchen.com'];
+      
+      // Fallback for demo, but we should check user_roles table too
+      const { data: roleData } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', session.user.id)
+        .single();
+
+      const userRole = roleData?.role || (adminEmails.includes(userEmail) ? 'Super Admin' : null);
+
+      if (!userRole) {
+        // Not an admin, redirect to homepage
+        router.push('/');
+        return;
+      }
+
+      setAdmin({
+        id: session.user.id,
+        name: session.user.user_metadata?.full_name || userEmail.split('@')[0],
+        email: userEmail,
+        role: userRole
+      });
+      setLoading(false);
+    };
+
+    checkAuth();
   }, [router]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('admin_session');
-    router.push('/admin');
+  const handleLogout = async () => {
+    if (supabase) await supabase.auth.signOut();
+    localStorage.removeItem('admin_session'); 
+    router.push('/');
   };
 
-  if (!admin) {
+  if (loading || !admin) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0f172a' }}>
-        <div style={{ color: '#D4A853', fontSize: '1.2rem' }}>Loading...</div>
+        <div style={{ color: '#D4A853', fontSize: '1.2rem', textAlign: 'center' }}>
+          <div style={{ marginBottom: '1rem', fontSize: '2rem' }}>🍳</div>
+          Verifying Admin Access...
+        </div>
       </div>
     );
   }

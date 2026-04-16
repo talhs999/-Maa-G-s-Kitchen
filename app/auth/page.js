@@ -51,6 +51,22 @@ export default function AuthPage() {
 
         if (signUpError) throw signUpError;
         
+        // After successful signup, create a record in user_roles
+        if (data?.user) {
+          try {
+            await supabase.from('user_roles').insert([
+              { 
+                user_id: data.user.id, 
+                role: 'Customer',
+                email: email, // Optional redundancy for easy listing
+                full_name: name
+              }
+            ]);
+          } catch (roleErr) {
+            console.error("Error creating user role record:", roleErr);
+          }
+        }
+        
         if (data?.user?.identities?.length === 0) {
           setError('This email is already registered.');
         } else {
