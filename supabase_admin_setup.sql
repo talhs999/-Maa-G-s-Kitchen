@@ -76,10 +76,34 @@ CREATE POLICY "Admin full access on shipping" ON shipping_regions USING (true) W
 DROP POLICY IF EXISTS "Admin full access on user_roles" ON user_roles;
 CREATE POLICY "Admin full access on user_roles" ON user_roles USING (true) WITH CHECK (true);
 
--- 8. Add status column to Orders if it isn't completely restricted yet
+-- 8. Add missing tracking and checkout columns to Orders table
 DO $$ 
 BEGIN 
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='status') THEN
         ALTER TABLE orders ADD COLUMN status TEXT DEFAULT 'pending';
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='phone') THEN
+        ALTER TABLE orders ADD COLUMN phone TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='shipping_address') THEN
+        ALTER TABLE orders ADD COLUMN shipping_address TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='notes') THEN
+        ALTER TABLE orders ADD COLUMN notes TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='discount') THEN
+        ALTER TABLE orders ADD COLUMN discount DECIMAL DEFAULT 0;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='coupon_code') THEN
+        ALTER TABLE orders ADD COLUMN coupon_code TEXT;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='payment_method') THEN
+        ALTER TABLE orders ADD COLUMN payment_method TEXT DEFAULT 'Cash on Delivery';
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='user_id') THEN
+        ALTER TABLE orders ADD COLUMN user_id UUID;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='orders' AND column_name='is_guest') THEN
+        ALTER TABLE orders ADD COLUMN is_guest BOOLEAN DEFAULT true;
     END IF;
 END $$;

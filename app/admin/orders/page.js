@@ -118,7 +118,22 @@ export default function OrdersPage() {
                     onMouseLeave={e => { if (selected?.id !== o.id) e.currentTarget.style.background = '#fff'; }}
                   >
                     <td style={{ padding: '0.85rem 1rem' }}><span style={{ color: '#DC2626', fontWeight: 700, fontFamily: 'monospace' }}>{o.order_number}</span></td>
-                    <td style={{ padding: '0.85rem 1rem', color: '#334155', fontWeight: 500 }}>{o.customer_name || o.customer_email}</td>
+                    <td style={{ padding: '0.85rem 1rem', color: '#334155', fontWeight: 500 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        {o.customer_name || o.customer_email}
+                        <span style={{ 
+                          fontSize: '0.65rem', 
+                          padding: '2px 6px', 
+                          borderRadius: '4px', 
+                          fontWeight: 700,
+                          background: o.is_guest ? '#f1f5f9' : '#DBEAFE', 
+                          color: o.is_guest ? '#64748b' : '#2563EB',
+                          textTransform: 'uppercase'
+                        }}>
+                          {o.is_guest ? 'Guest' : 'User'}
+                        </span>
+                      </div>
+                    </td>
                     <td style={{ padding: '0.85rem 1rem', color: '#64748b', whiteSpace: 'nowrap' }}>{fmtDate(o.created_at)}</td>
                     <td style={{ padding: '0.85rem 1rem' }}><Badge status={o.status} /></td>
                     <td style={{ padding: '0.85rem 1rem', fontWeight: 700 }}>{fmt(o.total)}</td>

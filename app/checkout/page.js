@@ -119,6 +119,8 @@ export default function CheckoutPage() {
         total: Number(finalTotal),
         payment_method: 'Cash on Delivery',
         status: 'pending',
+        is_guest: !authUser,
+        user_id: authUser ? authUser.id : null,
         items: items.map(item => ({
           id: item.id,
           name: item.name,
@@ -148,32 +150,6 @@ export default function CheckoutPage() {
   };
 
   if (!mounted || authLoading) return null;
-
-  // If user is not logged in, show a login prompt
-  if (!authUser) {
-    return (
-      <div className={styles.checkoutPage}>
-        <section className={styles.emptySection}>
-          <div className="container" style={{ textAlign: 'center', padding: '4rem 1rem' }}>
-            <User size={48} style={{ margin: '0 auto 1rem', color: '#94a3b8' }} />
-            <h1 style={{ fontSize: '1.8rem', marginBottom: '0.75rem' }}>Login Required</h1>
-            <p style={{ color: '#64748b', marginBottom: '2rem', maxWidth: 400, margin: '0 auto 2rem' }}>
-              Please sign in to your account to complete your order. Your cart will be saved.
-            </p>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link href="/auth" className="btn btn-dark" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                Sign In / Sign Up <ArrowRight size={18} />
-              </Link>
-              <Link href="/shop" className="btn btn-outline">
-                Continue Shopping
-              </Link>
-            </div>
-          </div>
-        </section>
-      </div>
-    );
-  }
-
   if (orderPlaced) {
     return (
       <div className={styles.checkoutPage}>
