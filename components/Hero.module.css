@@ -244,7 +244,7 @@
 
   .heroBadge {
     position: absolute;
-    bottom: -60px; /* Push it down below the text area */
+    bottom: 25px; /* Stay within the hero image area */
     left: 50%;
     transform: translateX(-50%);
     margin: 0;
