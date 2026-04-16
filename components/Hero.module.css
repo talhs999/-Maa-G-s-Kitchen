@@ -152,6 +152,7 @@
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--cream-border);
   text-align: center;
+  pointer-events: none;
 }
 
 .heroBadgeNum {
