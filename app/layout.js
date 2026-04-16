@@ -1,10 +1,5 @@
 import './globals.css';
-import { CartProvider } from '@/lib/cartContext';
-import OfferSlider from '@/components/OfferSlider';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import CartSidebar from '@/components/CartSidebar';
-import MobileBottomNav from '@/components/MobileBottomNav';
+import LayoutWrapper from '@/components/LayoutWrapper';
 
 export const metadata = {
   title: "Maa G's Kitchen | Homemade Sauces, Chutneys, Pickles & Masalas",
@@ -22,14 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <CartProvider>
-          <OfferSlider />
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <CartSidebar />
-          <MobileBottomNav />
-        </CartProvider>
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );
