@@ -1,25 +1,104 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { CheckCircle, ShieldCheck, Printer, ArrowRight, Package, MapPin, Truck, User } from 'lucide-react';
+import { CheckCircle, ShieldCheck, Printer, ArrowRight, Package, MapPin, Truck, User, Tag, AlertCircle } from 'lucide-react';
 import { useCart } from '@/lib/cartContext';
-import { submitOrder } from '@/lib/supabase';
+import { submitOrder, supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
 export default function CheckoutPage() {
   const { items, subtotal, shippingCost, total, clearCart, mounted } = useCart();
+  const router = useRouter();
+
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [placedOrderData, setPlacedOrderData] = useState(null);
+  const [authUser, setAuthUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponMsg, setCouponMsg] = useState(null);
+  const [couponApplied, setCouponApplied] = useState(null);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    postal: '',
+    notes: '',
+  });
+
+  // Auth check — pre-fill form if logged in
+  useEffect(() => {
+    const init = async () => {
+      if (!supabase) { setAuthLoading(false); return; }
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        setAuthUser(session.user);
+        setFormData(prev => ({
+          ...prev,
+          name: session.user.user_metadata?.full_name || '',
+          email: session.user.email || '',
+        }));
+      }
+      setAuthLoading(false);
+    };
+    init();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const applyCoupon = async () => {
+    setCouponMsg(null);
+    if (!couponCode.trim()) return;
+    if (!supabase) { setCouponMsg({ type: 'error', text: 'Cannot verify coupon right now.' }); return; }
+
+    const { data, error } = await supabase
+      .from('coupons')
+      .select('*')
+      .eq('code', couponCode.toUpperCase())
+      .eq('status', true)
+      .single();
+
+    if (error || !data) {
+      setCouponMsg({ type: 'error', text: 'Invalid or expired coupon code.' });
+      setCouponDiscount(0);
+      setCouponApplied(null);
+      return;
+    }
+
+    if (data.min_purchase && subtotal < data.min_purchase) {
+      setCouponMsg({ type: 'error', text: `Minimum purchase of Rs. ${data.min_purchase} required.` });
+      setCouponDiscount(0);
+      setCouponApplied(null);
+      return;
+    }
+
+    const discount = data.discount_type === 'percentage'
+      ? Math.floor((subtotal * data.discount_value) / 100)
+      : data.discount_value;
+
+    setCouponDiscount(discount);
+    setCouponApplied(data);
+    setCouponMsg({ type: 'success', text: `Coupon applied! You saved Rs. ${discount}` });
+  };
+
+  const finalTotal = Math.max(0, total - couponDiscount);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.name || !formData.email || !formData.phone || !formData.address || !formData.city) {
+      alert('Please fill in all required fields.');
+      return;
+    }
     setIsSubmitting(true);
 
     try {
@@ -27,13 +106,19 @@ export default function CheckoutPage() {
         customer_name: formData.name,
         customer_email: formData.email,
         customer_phone: formData.phone,
+        phone: formData.phone,
+        shipping_address: `${formData.address}, ${formData.city}${formData.postal ? ', ' + formData.postal : ''}`,
         address: formData.address,
         city: formData.city,
         postal_code: formData.postal,
         notes: formData.notes,
         subtotal: Number(subtotal),
-        shipping_cost: Number(shippingCost),
-        total: Number(total),
+        shipping_cost: Number(shippingCost || 0),
+        discount: couponDiscount,
+        coupon_code: couponApplied?.code || null,
+        total: Number(finalTotal),
+        payment_method: 'Cash on Delivery',
+        status: 'pending',
         items: items.map(item => ({
           id: item.id,
           name: item.name,
@@ -44,7 +129,7 @@ export default function CheckoutPage() {
       };
 
       const result = await submitOrder(orderData);
-      
+
       if (result.success) {
         setOrderNumber(result.orderNumber);
         setPlacedOrderData(orderData);
@@ -52,17 +137,42 @@ export default function CheckoutPage() {
         clearCart();
         window.scrollTo(0, 0);
       } else {
-        alert("Failed to place order: " + result.error);
+        alert('Failed to place order: ' + (result.error || 'Unknown error.'));
       }
     } catch (err) {
       console.error(err);
-      alert("An unexpected error occurred.");
+      alert('An unexpected error occurred. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (!mounted) return null;
+  if (!mounted || authLoading) return null;
+
+  // If user is not logged in, show a login prompt
+  if (!authUser) {
+    return (
+      <div className={styles.checkoutPage}>
+        <section className={styles.emptySection}>
+          <div className="container" style={{ textAlign: 'center', padding: '4rem 1rem' }}>
+            <User size={48} style={{ margin: '0 auto 1rem', color: '#94a3b8' }} />
+            <h1 style={{ fontSize: '1.8rem', marginBottom: '0.75rem' }}>Login Required</h1>
+            <p style={{ color: '#64748b', marginBottom: '2rem', maxWidth: 400, margin: '0 auto 2rem' }}>
+              Please sign in to your account to complete your order. Your cart will be saved.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link href="/auth" className="btn btn-dark" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                Sign In / Sign Up <ArrowRight size={18} />
+              </Link>
+              <Link href="/shop" className="btn btn-outline">
+                Continue Shopping
+              </Link>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   if (orderPlaced) {
     return (
@@ -78,7 +188,7 @@ export default function CheckoutPage() {
                 <div className={styles.invoiceBranding}>
                   <div className={styles.invoiceLogo}>🍳</div>
                   <div>
-                    <h2>MAA G'S KITCHEN</h2>
+                    <h2>MAA G&apos;S KITCHEN</h2>
                     <p>Homemade Goodness, Delivered.</p>
                   </div>
                 </div>
@@ -99,7 +209,7 @@ export default function CheckoutPage() {
                 <div className={styles.shippingCol}>
                   <h4><MapPin size={16} /> Delivery Address</h4>
                   <p>{placedOrderData?.address}</p>
-                  <p>{placedOrderData?.city}, {placedOrderData?.postal_code}</p>
+                  <p>{placedOrderData?.city}{placedOrderData?.postal_code ? ', ' + placedOrderData.postal_code : ''}</p>
                 </div>
               </div>
 
@@ -127,9 +237,15 @@ export default function CheckoutPage() {
                     <span>Rs. {placedOrderData?.subtotal}</span>
                   </div>
                   <div className={styles.summaryLine}>
-                    <span>Shipping Fee</span>
-                    <span>Rs. {placedOrderData?.shipping_cost}</span>
+                    <span>Shipping</span>
+                    <span>{(placedOrderData?.shipping_cost || 0) === 0 ? 'FREE' : `Rs. ${placedOrderData?.shipping_cost}`}</span>
                   </div>
+                  {placedOrderData?.discount > 0 && (
+                    <div className={styles.summaryLine} style={{ color: '#16a34a' }}>
+                      <span>Discount ({placedOrderData?.coupon_code})</span>
+                      <span>- Rs. {placedOrderData?.discount}</span>
+                    </div>
+                  )}
                   <div className={`${styles.summaryLine} ${styles.grandTotal}`}>
                     <span>Grand Total</span>
                     <span>Rs. {placedOrderData?.total}</span>
@@ -162,9 +278,10 @@ export default function CheckoutPage() {
     return (
       <div className={styles.checkoutPage}>
         <section className={styles.emptySection}>
-          <div className="container">
-            <h1>No items to checkout</h1>
-            <p>Add some products to your cart first.</p>
+          <div className="container" style={{ textAlign: 'center', padding: '4rem 1rem' }}>
+            <Package size={48} style={{ margin: '0 auto 1rem', color: '#94a3b8' }} />
+            <h1>Your cart is empty</h1>
+            <p style={{ color: '#64748b', marginBottom: '2rem' }}>Add some products to your cart first.</p>
             <Link href="/shop" className="btn btn-primary">Go to Shop</Link>
           </div>
         </section>
@@ -174,7 +291,6 @@ export default function CheckoutPage() {
 
   return (
     <div className={styles.checkoutPage}>
-      {/* Hero */}
       <section className={styles.hero}>
         <div className="container">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
@@ -210,7 +326,7 @@ export default function CheckoutPage() {
               <h2 style={{ marginTop: 'var(--space-2xl)' }}>Shipping Address</h2>
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="checkout-address">Address *</label>
+                  <label htmlFor="checkout-address">Street Address *</label>
                   <input id="checkout-address" name="address" className="input" placeholder="Street address" required value={formData.address} onChange={handleChange} />
                 </div>
               </div>
@@ -231,6 +347,40 @@ export default function CheckoutPage() {
                   <textarea id="checkout-notes" name="notes" className="input textarea" placeholder="Any special instructions..." value={formData.notes} onChange={handleChange} />
                 </div>
               </div>
+
+              {/* Coupon Section */}
+              <h2 style={{ marginTop: 'var(--space-2xl)' }}>Discount Coupon</h2>
+              <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
+                <div style={{ flex: 1 }}>
+                  <input
+                    className="input"
+                    placeholder="Enter coupon code"
+                    value={couponCode}
+                    onChange={e => setCouponCode(e.target.value.toUpperCase())}
+                    style={{ textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600 }}
+                  />
+                </div>
+                <button type="button" onClick={applyCoupon} className="btn btn-outline" style={{ whiteSpace: 'nowrap' }}>
+                  <Tag size={16} /> Apply
+                </button>
+              </div>
+              {couponMsg && (
+                <div style={{
+                  marginTop: '0.5rem',
+                  padding: '0.6rem 0.9rem',
+                  borderRadius: 8,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  background: couponMsg.type === 'success' ? '#D1FAE5' : '#FEE2E2',
+                  color: couponMsg.type === 'success' ? '#059669' : '#DC2626',
+                }}>
+                  {couponMsg.type === 'success' ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+                  {couponMsg.text}
+                </div>
+              )}
             </div>
 
             {/* Summary */}
@@ -255,9 +405,15 @@ export default function CheckoutPage() {
                   <span>Shipping</span>
                   <span>{shippingCost === 0 ? 'FREE' : `Rs. ${shippingCost}`}</span>
                 </div>
+                {couponDiscount > 0 && (
+                  <div className={styles.summaryRow} style={{ color: '#16a34a', fontWeight: 600 }}>
+                    <span>Discount ({couponApplied?.code})</span>
+                    <span>- Rs. {couponDiscount}</span>
+                  </div>
+                )}
                 <div className={`${styles.summaryRow} ${styles.totalRow}`}>
                   <span>Total</span>
-                  <span>Rs. {total}</span>
+                  <span>Rs. {finalTotal}</span>
                 </div>
 
                 <div className={styles.paymentNote}>
@@ -265,13 +421,13 @@ export default function CheckoutPage() {
                   <span>Cash on Delivery — Pay when you receive your order</span>
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={isSubmitting}
-                  className={`btn btn-primary btn-lg ${styles.submitBtn}`} 
+                  className={`btn btn-primary btn-lg ${styles.submitBtn}`}
                   style={{ width: '100%' }}
                 >
-                  {isSubmitting ? 'Processing...' : `Place Order — Rs. ${total}`}
+                  {isSubmitting ? 'Processing...' : `Place Order — Rs. ${finalTotal}`}
                 </button>
               </div>
             </div>
