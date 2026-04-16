@@ -243,28 +243,8 @@
   }
 
   .heroBadge {
-    position: absolute;
-    bottom: 25px; /* Stay within the hero image area */
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0;
-    z-index: 11;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: var(--white);
-    padding: var(--space-lg);
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    justify-content: center;
-    border: 1px solid var(--spice-warm);
-    box-shadow: var(--shadow-lg);
-    animation: rotateIn 1s ease-out;
+    display: none;
   }
-
-  .heroBadgeNum { font-size: 1.8rem; line-height: 1; }
-  .heroBadgeText { font-size: 0.6rem; letter-spacing: 1px; }
 
   .heroLabel { justify-content: center; color: var(--spice-warm); margin-bottom: var(--space-md); }
   .heroCtas { 
