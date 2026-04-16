@@ -12,15 +12,6 @@ const STATUS_COLORS = {
   cancelled:  { bg: '#FEE2E2', text: '#DC2626' },
 };
 
-const STATUSES = ['', 'pending', 'processing', 'shipped', 'delivered', 'cancelled'];
-const STATUS_COLORS = {
-  pending:    { bg: '#FEF3C7', text: '#D97706' },
-  processing: { bg: '#DBEAFE', text: '#2563EB' },
-  shipped:    { bg: '#EDE9FE', text: '#7C3AED' },
-  delivered:  { bg: '#D1FAE5', text: '#059669' },
-  cancelled:  { bg: '#FEE2E2', text: '#DC2626' },
-};
-
 function Badge({ status }) {
   const c = STATUS_COLORS[status?.toLowerCase()] || STATUS_COLORS.pending;
   return <span style={{ background: c.bg, color: c.text, padding: '3px 10px', borderRadius: 20, fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing:'0.5px' }}>{status}</span>;
