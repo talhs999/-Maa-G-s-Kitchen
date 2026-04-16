@@ -290,13 +290,18 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   }
   
-  /* Improve stroke visibility for outline button on mobile dark bg */
-  .heroCtas .btn-outline {
-    border-color: rgba(255, 255, 255, 0.5) !important;
+  /* Improve visibility for buttons on mobile dark bg */
+  .heroCtas :global(.btn-primary) {
+    border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+    background: var(--ink) !important;
     color: var(--white) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
   }
-  .heroCtas .btn-outline:hover {
-    background: var(--white) !important;
-    color: var(--black) !important;
+  
+  .heroCtas :global(.btn-outline) {
+    border-color: rgba(255, 255, 255, 0.8) !important;
+    color: var(--white) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(4px);
   }
 }
