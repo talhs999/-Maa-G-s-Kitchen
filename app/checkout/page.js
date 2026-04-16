@@ -103,24 +103,17 @@ export default function CheckoutPage() {
 
     try {
       const orderData = {
-        customer_name: formData.name,
+        customer_name: `${formData.name} ${authUser ? '(Registered)' : '(Guest)'}`,
         customer_email: formData.email,
         customer_phone: formData.phone,
-        phone: formData.phone,
-        shipping_address: `${formData.address}, ${formData.city}${formData.postal ? ', ' + formData.postal : ''}`,
         address: formData.address,
         city: formData.city,
-        postal_code: formData.postal,
-        notes: formData.notes,
+        postal_code: formData.postal || '',
+        notes: `Notes: ${formData.notes || 'None'} | Discount: Rs. ${couponDiscount} (${couponApplied?.code || 'No Coupon'}) | Payment: Cash on Delivery`,
         subtotal: Number(subtotal),
         shipping_cost: Number(shippingCost || 0),
-        discount: couponDiscount,
-        coupon_code: couponApplied?.code || null,
         total: Number(finalTotal),
-        payment_method: 'Cash on Delivery',
         status: 'pending',
-        is_guest: !authUser,
-        user_id: authUser ? authUser.id : null,
         items: items.map(item => ({
           id: item.id,
           name: item.name,
